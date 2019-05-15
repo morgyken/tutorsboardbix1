@@ -242,11 +242,7 @@ class UserQuestionController extends Controller
 
         $bids =count ($bids);
 
-
         $interval = $time->getDeadlineInSeconds($question_id);
-
-     
-
 
         //question files 
         $path_question = public_path().'/storage/uploads/'.$question_id.'/question/';
@@ -284,8 +280,6 @@ class UserQuestionController extends Controller
 
       if(Auth::check())
        {
-
-
                 return view ('tutor.question-det',
                   [
                     // class for html data
@@ -309,7 +303,7 @@ class UserQuestionController extends Controller
                     //assigned
                     'status'   => $status,
         
-                    'tutor'   => $tutor,
+                    'tutor'   => Auth::User()->name,
 
                     //bids
 
@@ -323,7 +317,6 @@ class UserQuestionController extends Controller
 
 
                   ]);
-
 
        }
        else{

@@ -18,8 +18,8 @@ class CreateQuestionHistoryTablesTable extends Migration
             $table->timestamps();
             $table->rememberToken();
             $table->integer('question_id');
-            $table->integer('user_id')->nullable();          
-            $table->string('status')->default('');
+            $table->integer('user_id');          
+            $table->string('status');
             
 
         });

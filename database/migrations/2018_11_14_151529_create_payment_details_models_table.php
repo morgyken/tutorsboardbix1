@@ -17,11 +17,11 @@ class CreatePaymentDetailsModelsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->rememberToken();
-            $table->string('status')->default('');
-            $table->integer('question_id')->unique();
-            $table->integer('user_id')->nullable();  
-            $table->integer('tutor_id')->nullable();
-            $table->integer('amount')->nullable();        
+            $table->string('status');
+            $table->integer('question_id');
+            $table->integer('user_id');  
+            $table->integer('tutor_id');
+            $table->integer('amount');        
           
         });
     }

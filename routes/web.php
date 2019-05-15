@@ -40,7 +40,7 @@ Route::post('bids/{question_id}/',
 
 Route::post('/assign/{question_id}/',
 
-	[ 'as'=>'assign-question', 'uses'=>'QuestionBidsController@AssignQuestion'])->middleware('assign');
+	[ 'as'=>'assign-question', 'uses'=>'QuestionBidsController@AssignQuestions'])->middleware('assign');
 
 Route::post('/reassign/{question_id}/',
 
@@ -96,11 +96,13 @@ Route::prefix('admin')->group(function (){
 	Route::get('post-deadlinePric',array('as'=>'deadlinePrice','uses'=>'HomeController@getQuestionPrice'));
 
 	Route::post('PostQuestionPriceDeadline',array('as'=>'PostQuestionPrice',
+		
 	'uses'=>'AskQuestionController@postQuestionDetails'));
 
 	Route::get('/question_det/{question_id}', [ 'as'=>'question_det', 'uses'=>'QuestionController@NewQuestionDetails'] );
 
 	Route::any('file-download/{question_id}/{filename}/', ['as'=>'file-download', 
+
 		'uses' =>'QuestionController@downloads']);
 
 	Route::get('comment-files/{question_id}/{filename}/{message_id}',array('as'=>'comment-files','uses'=>'

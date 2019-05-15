@@ -128,7 +128,24 @@
                                 </div>
 
                             </div>
-                            
+                            <?php 
+                            $resfiles = \App\Http\Controllers\UserQuestionController::ResponseFiles($question->question_id,  $comm->messageid);
+
+                            ?>
+                            <div class="col-md-12"> 
+                                @foreach($resfiles as $file)
+
+                                    <p class="down-files"><a href="{{route('response-download',
+                                                    [
+                                                        'question_id' => $question->question_id,
+                                                        'messageid' => $comm->messageid,
+                                                        'filename'=>$file['basename']
+                                                     ])}}"
+                                        >
+                                    <i class="icon-download-alt">{{$file['basename'] }} </i></a>   
+                                    </p>
+                                @endforeach 
+                            </div>       
                            
                             @endforeach  
                             

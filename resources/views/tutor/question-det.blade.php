@@ -87,7 +87,25 @@
                             {!! htmlspecialchars_decode($question-> question_body) !!}
 
                    
-                             <div class="news_d_footer">
+                             
+
+                            <div class="news_d_footer">                               
+                               <h5> File Uploads  </h5>
+                            </div>
+
+                            @foreach($files as $file)
+
+                                    <p class="down-files"><a href="{{route('user-download',
+                                                    [
+                                                        'question_id' => $question->question_id,
+                                                        'filename'=>$file['basename']
+                                                     ])}}"
+                                        >
+                                    <i class="icon-download-alt">{{$file['basename'] }} </i></a>   
+                                    </p>
+                            @endforeach
+
+                            <div class="news_d_footer">
 
                                 @if($status != 'taken')
                             
@@ -115,104 +133,102 @@
 
                                 @endif                             
                                
-                            </div>
+                            </div>  
 
-                            <div class="news_d_footer">                               
-                               <h5> File Uploads  </h5>
-                            </div>
-
-                            @foreach($files as $file)
-
-                                    <p class="down-files"><a href="{{route('user-download',
-                                                    [
-                                                        'question_id' => $question->question_id,
-                                                        'filename'=>$file['basename']
-                                                     ])}}"
-                                        >
-                                    <i class="icon-download-alt">{{$file['basename'] }} </i></a>   
-                                    </p>
-                            @endforeach
-                            <div class="news_d_footer">                               
-                               <h5> Conversation History </h5>
-                            </div>
-
-                     
-                        <div class="comments-area">
-                            @foreach($messages as $comm)
-                    
-                            <div class="comment-list">
-                                <div class="single-comment justify-content-between d-flex">
-                                    <div class="user justify-content-between d-flex">
-                                        <div class="thumb">
-                                            <img src="{{ URL::asset('opium/img/blog/c1.jpg ')}}" alt="">
-                                        </div>
-                                        <div class="desc">
-                                            <h5><a href="#"> Morgyken</a></h5>
-                                               {{ $comm->created_at }}: {{ $comm->title }}
-                                            <p class="date"> </p>
-                                            <p class="comment">
-                                               {{ $comm->message }}
-                                            </p>
-                                        </div> 
                                        
-
-                                    </div>                                    
+                        @if($status != 'taken')
+                            <div class="news_d_footer">                               
+                               <h5> The Order is Still available </h5>
+                            </div>
+                        @else
+                        
+                            @if(Auth::user()->name !=  $tutor)
+                                <div class="news_d_footer">                               
+                                   <h5> The Order has been assigned to {{$tutor}} </h5>
                                 </div>
-                            </div>
-                            <?php 
-                            $resfiles = \App\Http\Controllers\UserQuestionController::ResponseFiles($question->question_id,  $comm->messageid);
+                            @else
+                                <div class="news_d_footer">                               
+                               <h5> Conversation History </h5>
+                                </div>
 
-                            ?>
-                            <div class="col-md-12"> 
-                                @foreach($resfiles as $file)
-
-                                    <p class="down-files"><a href="{{route('response-download',
-                                                    [
-                                                        'question_id' => $question->question_id,
-                                                        'messageid' => $comm->messageid,
-                                                        'filename'=>$file['basename']
-                                                     ])}}"
-                                        >
-                                    <i class="icon-download-alt">{{$file['basename'] }} </i></a>   
-                                    </p>
-                                @endforeach 
-                            </div>       
-                            <div class="news_d_footer">     
-                                        
-                            </div>
-                    
-                            @endforeach  
+                                <div class="comments-area">
+                                    @foreach($messages as $comm)
                             
-                            </div>                                                              
-                        </div>
-                        <div class="comment-form">
+                                    <div class="comment-list">
+                                        <div class="single-comment justify-content-between d-flex">
+                                            <div class="user justify-content-between d-flex">
+                                                <div class="thumb">
+                                                    <img src="{{ URL::asset('opium/img/blog/c1.jpg ')}}" alt="">
+                                                </div>
+                                                <div class="desc">
+                                                    <h5><a href="#"> Morgyken</a></h5>
+                                                       {{ $comm->created_at }}: {{ $comm->title }}
+                                                    <p class="date"> </p>
+                                                    <p class="comment">
+                                                       {{ $comm->message }}
+                                                    </p>
+                                                </div> 
+                                               
 
-                            <h5>Post Answer/Leave a Comment</h5>
+                                            </div>                                    
+                                        </div>
+                                    </div>
+                                    <?php 
+                                    $resfiles = \App\Http\Controllers\UserQuestionController::ResponseFiles($question->question_id,  $comm->messageid);
 
-                            <form action="{{ route('user-messages', ['question' =>$question->question_id])}}" method="POST" enctype="multipart/form-data">
+                                    ?>
+                                    <div class="col-md-12"> 
+                                        @foreach($resfiles as $file)
 
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="title" placeholder="Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'" name="title">
-                                    <input type="hidden" name="qid" value="{{$question->question_id}}">
+                                            <p class="down-files"><a href="{{route('response-download',
+                                                            [
+                                                                'question_id' => $question->question_id,
+                                                                'messageid' => $comm->messageid,
+                                                                'filename'=>$file['basename']
+                                                             ])}}"
+                                                >
+                                            <i class="icon-download-alt">{{$file['basename'] }} </i></a>   
+                                            </p>
+                                        @endforeach 
+                                    </div>       
+                                    <div class="news_d_footer">     
+                                                
+                                    </div>
+                            
+                                    @endforeach  
+                                    
+                                    </div>                                                              
                                 </div>
-                                <div class="form-group">
-                                    <textarea class="form-control mb-10" rows="5" name="text" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
-                                </div>
-                                    <div class="form-group"> 
-                                    <span> Choose File (Optional)</span>      
-                                
-                                        <div class="custom-file">
+                                <div class="comment-form">
 
-                                            <input type="file" name="file[]" class="form-control" multiple>                                            
-                                            <div class="invalid-feedback">Example invalid custom file feedback</div>
-                                          </div>
-                                    </div>      
-                              
-                                <button class="primary-btn submit_btn">Post Answer or Comment</button>
-                            </form>
-                        </div>
+                                    <h5>Post Answer/Leave a Comment</h5>
+
+                                    <form action="{{ route('user-messages', ['question' =>$question->question_id])}}" method="POST" enctype="multipart/form-data">
+
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="title" placeholder="Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'" name="title">
+                                            <input type="hidden" name="qid" value="{{$question->question_id}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control mb-10" rows="5" name="text" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
+                                        </div>
+                                            <div class="form-group"> 
+                                            <span> Choose File (Optional)</span>      
+                                        
+                                                <div class="custom-file">
+
+                                                    <input type="file" name="file[]" class="form-control" multiple>                                            
+                                                    <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                                  </div>
+                                            </div>      
+                                      
+                                        <button class="primary-btn submit_btn">Post Answer or Comment</button>
+                                    </form>
+                                </div>
+                                @endif
+                        @endif
                     </div>
                 </div>
             </div>

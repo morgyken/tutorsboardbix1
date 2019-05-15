@@ -17,9 +17,9 @@ class CreateSuspensionModelsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->integer('tutor_id')->unique();
-            $table->integer('mode')->nullable();   
-            $table->integer('user_id')->nullable(); 
-            $table->integer('message')->nullable();     
+            $table->integer('mode');   
+            $table->integer('user_id'); 
+            $table->integer('message');     
         });
     }
 

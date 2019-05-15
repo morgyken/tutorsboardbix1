@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+//use App\Http\Controllers\Controller;
 
 use App\QuestionStatusModel;
 use Carbon\Carbon;
@@ -33,7 +33,8 @@ use App\AdminModel;
 use Illuminate\Support\Facades\Auth;
 use App\ MessagesModel;
 
-class QuestionController extends Controller
+//class QuestionController extends Controller
+class QuestionController extends \App\Http\Controllers\Controller
 {
     /*
     * Get the question starts, used in the view for links
@@ -244,10 +245,7 @@ class QuestionController extends Controller
                 $manuals[] = pathinfo($path);
             }
 
-        //Given the following 
-
-        $tutor= '';
-
+        //find tutor 
 
         $status =  DB::table('question_matrices')
                     ->select('status')
@@ -292,7 +290,7 @@ class QuestionController extends Controller
                     //assigned
                     'status'   => $status,
         
-                    'tutor'   => $tutor,
+                    'tutor'   => Auth::User()->name,
 
                     //bids
 
@@ -305,7 +303,6 @@ class QuestionController extends Controller
                     //'commfiles' => $comm_files
 
                   ]);
-
 
        }
        else{

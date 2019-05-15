@@ -162,6 +162,7 @@ public function AssignQuestion (Request $request, $question, $tutor=null)
     public function AssignQuestions ($question)
     {
 
+
         $update = new UpdateQuestionController();
 
         $status =  "taken";
@@ -179,14 +180,13 @@ public function AssignQuestion (Request $request, $question, $tutor=null)
                         ->where ('id', Auth::user()->id)
                         ->first();
 
-
         $count = count($assigned_questions);
 
         $maximum = 0;
 
         switch ($account_rating->account_level) {
             case 1:
-              
+              $maximum = 3;
                 break;
             case 2:
                 $maximum = 8;

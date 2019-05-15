@@ -16,8 +16,7 @@ class CreateAcademicLevelsTable extends Migration
         Schema::create('academic_levels', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->rememberToken();
-            
+            $table->rememberToken();            
             $table->integer('academic-level');                 
         });
     }

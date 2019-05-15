@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentRequestsTable extends Migration
+class CreateUniversityModelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreatePaymentRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment_requests', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('university_models', function (Blueprint $table) {
+           
+           $table->increments('id');
             $table->timestamps();
             $table->rememberToken();
-            $table->text('request_id');
-            $table->text('amount');
-            $table->string('user_id');
-            $table->string('status')->nullable();
+            $table->string('university_name');
+            $table->string('country');
+            $table->string('state');
         });
     }
 
@@ -31,6 +31,6 @@ class CreatePaymentRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_requests');
+        Schema::dropIfExists('university_models');
     }
 }
