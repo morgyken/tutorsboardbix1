@@ -8,6 +8,7 @@ use Srmklive\PayPal\Services\ExpressCheckout;
 
 use Auth;
 
+use Session;
 
 class PaypalPayments extends Controller
 {
@@ -17,45 +18,30 @@ class PaypalPayments extends Controller
 
 	private $invoiceID;
 
+	public function PayWithPaypal(Request $request, $price)
+   {
+   	
+	   $provider = new ExpressCheckout;
 
-    public function PayWithPaypalCallback (Request $request)
-	{
-		$provider = new ExpressCheckout;
+	   $price = number_format($price, 2);
 
-		$token = $request->token;
-
-		$data = $this->paymentData($this->price);
+	   $this->price = $price;
 
 
-		$PayerID = $request->PayerID;
+	   $data = $this->paymentData();
 
-		$response = $provider->getExpressCheckoutDetails($token);
 
-		$invoiceID = $this->invoiceID;
 
+		$response = $provider->setExpressCheckout($data);
 
 		//dd($response);
 
-		
-		$provider->doExpressCheckoutPayment($data, $token, $PayerID);
-		
+		return redirect($response['paypal_link']);
 
-		// The $token is the value returned from SetExpressCheckout API call
-		$response = $provider->createBillingAgreement($token);
+   }
+  
+	private function paymentData (){
 
-		$response = $provider->getTransactionDetails($token);
-
-		return $response;
-
-		return redirect()->route('success');
-		
-	}
-
-	private function paymentData ($price){
-
-		$price = substr($price,2);
-
-		$this->price = intval($price);
 
 		$data = [];
 		$data['items'] = [
@@ -69,39 +55,58 @@ class PaypalPayments extends Controller
 
 		//$data['name'] = Auth::user()->username;
 
-		$data['invoice_id'] = uniqid();
+		$data['invoice_id'] = $data['invoice_id'] = uniqid();;
+
 		$this->invoiceID = $data['invoice_id']; 
+		
 		$data['invoice_description'] = "Payment for an Essay";
+
 		$data['return_url'] = route('paypal-callback');
+
 		$data['cancel_url'] = route('paypal-error');
 
-
-		$total = $price;
-		
-		$data['total'] = $total;
-
-
-		//give a discount of 10% of the order amount
-		$data['shipping_discount'] = round((3/ 100) * $total, 2);
-
+	
+		$data['total'] = $this->price;
 
 		return $data;
 
-
 	}
+
+	public function PayWithPaypalCallback (Request $request)
+	{
+		$provider = new ExpressCheckout;
+
+		$token = $request->token;
+
+		$data = $this->paymentData($this->price);
+
+		$PayerID = $request->PayerID;
+
+		$response = $provider->getExpressCheckoutDetails($token);
+
+		$invoiceID = $this->invoiceID;
+		
+		$provider->doExpressCheckoutPayment($data, $token, $PayerID);
+		
+
+		// The $token is the value returned from SetExpressCheckout API call
+
+		$response = $provider->createBillingAgreement($token);
+
+
+		$response = $provider->getTransactionDetails($token);
+
+		if($response['ACK'] == 'Failure')
+
+		 	retturn redirect()-> route('paypal-error');
+
+
+		return redirect()->route('success');
+		
+	}
+
   
-   public function PayWithPaypal(Request $request, $price)
-   {
-   	
-	   $provider = new ExpressCheckout;
-
-
-	   $data = $this->paymentData($price);
-	   
-
-		$response = $provider->setExpressCheckout($data);
-
-		return redirect($response['paypal_link']);
-
-   }
+   
 }
+
+

@@ -25,6 +25,8 @@ use App\PostQuestionModel;
 use App\PostQuestionPrice;
 use App\SuggestDeadline;
 use App\SuggestPriceIncrease;
+use Srmklive\PayPal\Services\ExpressCheckout;
+use Srmklive\PayPal\Services\AdaptivePayments;
 
 use Illuminate\Support\Facades\Input;
 
@@ -44,9 +46,9 @@ class CustomerAskQuestionController extends Controller
      public function GetMakePayments(){
         $user =  User::where('email', Auth::user()->email) ->first();
             
-            $role = $user->user_role;
+        $role = $user->user_role;
 
-        return view('quest.make-payments', ['role' => $role, 'user'=> $user]);
+        return view('payment.payment-det', ['role' => $role, 'user'=> $user]);
 
     }
 
@@ -143,20 +145,18 @@ class CustomerAskQuestionController extends Controller
     }
 
 
-    public function postQuestionDetails(Request $request)
+    public function CustpostQuestionDetails(Request $request)
     {
         /*
          * Insert into database
          */
-
-       
 
         $question  = $request-> session()->get('question_id');
 
         DB::table('question_details')->where('question_id', $question)
                 ->update(
                     [    
-                'tutor_price' => round(24.8 * substr($request['question_price'], 2)/100,0, PHP_ROUND_HALF_UP),
+                'tutor_price' => round(24.8 * (int)substr($request['question_price'], 2)/100,0, PHP_ROUND_HALF_UP),
                 //'tutor_price' =>  $request['tutor_price'],
                 'urgency' => $request->urgency,
                  
@@ -183,6 +183,13 @@ class CustomerAskQuestionController extends Controller
 
                 $request->question_price  
             );
+        
+          //output formated question price
+
+          $request->session()->put('price12',  
+
+                substr($request->question_price,2)
+            );
 
 
         $request->session()->put('question_deadline', 
@@ -190,9 +197,19 @@ class CustomerAskQuestionController extends Controller
                 $request->question_deadline  
             );
 
-        //redirect to post deadline view
+        $receiptNo = rand(9999999,99999999);
 
-        return redirect() -> route('home');
+        $today =  \Carbon\Carbon::now()->toDateTimeString();
+
+        //add receipt number to session
+
+        session(['receiptNo' => $receiptNo, 'receiptDate' => $today]);
+
+     
+        //redirect to payment with paypal
+
+
+        return redirect() -> route('viewMakePayments');
     }
 
     public function postPayment(Request $request)
@@ -241,7 +258,7 @@ class CustomerAskQuestionController extends Controller
      
     $user1  = Auth::user();
 
-    return view ('question.ask-question', ['user' => $user1]);
+    return view ('cust.ask-question', ['user' => $user1]);
     
  }
 

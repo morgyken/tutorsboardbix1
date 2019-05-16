@@ -1,4 +1,4 @@
-@extends('layouts.layout-home')
+@extends('layouts.layout-cust')
 
 @section ('content')
 <script type="text/javascript">

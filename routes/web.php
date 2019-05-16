@@ -58,7 +58,9 @@ Route::any('file-downloads/{question_id}/{messageid}/{filename}/', ['as'=>'respo
 	
 		'uses' =>'UserQuestionController@ResponseDownloads']);
 
-Route::post('post-question',array('as'=>'cust.post.questions','uses'=>'CustomerAskQuestionController@postQuestion'));
+Route::post('post-question',array('as'=>'cust.post.questions',
+
+	'uses'=>'CustomerAskQuestionController@postQuestion'));
 
 Route::get('post-deadlinePric',array('as'=>'cust-deadlinePrice',
 
@@ -66,9 +68,34 @@ Route::get('post-deadlinePric',array('as'=>'cust-deadlinePrice',
 
 	Route::post('PostQuestionPriceDeadline',array('as'=>'CustPostQuestionPrice',
 		
-	'uses'=>'CustomerAskQuestionController@postQuestionDetails'));
+	'uses'=>'CustomerAskQuestionController@CustpostQuestionDetails'));
 
+//paypal routes
 
+Route::get('payment-with-paypal/{price}',
+	['uses' => 'PaypalPayments@PayWithPaypal', 'as' =>'get.paypal']);
+
+Route::get('/view-make-payment',
+			['as'=>'viewMakePayments', 
+
+			'uses' =>'CustomerAskQuestionController@GetMakePayments'] );
+
+Route::get('paypal/callback/',
+	['uses' => 'PaypalPayments@PayWithPaypalCallback', 'as' =>'paypal-callback']);
+
+Route::get('payment/success', function () {
+
+    return view('payment.success');
+    
+})->name('success');
+
+Route::get('/payment/error', function () {
+
+    return view('payment.error');
+
+})->name('paypal-error');
+
+//paypal routes 
 
 Route::prefix('admin')->group(function (){
 	
@@ -305,23 +332,7 @@ Route::get('home/{params?}', [ 'as'=>'home', 'uses'=>'HomeController@index']);
 
 //paypal routes
 
-Route::get('payment-with-paypal/{price}',
-	['uses' => 'PaypalPayments@PayWithPaypal', 'as' =>'get.paypal']);
 
-Route::get('/view-make-payment',['as'=>'view-make-payment', 'uses' =>'AskQuestionController@GetMakePayments'] );
-
-Route::get('paypal/callback/',
-	['uses' => 'PaypalPayments@PayWithPaypalCallback', 'as' =>'paypal-callback']);
-
-Route::get('payment/success', function () {
-    return view('paypal.payment-success');
-})->name('success');
-
-Route::get('/payment/error', function () {
-
-    return view('paypal.error');
-
-})->name('paypal-error');
 
 
 
