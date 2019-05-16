@@ -39,15 +39,27 @@ class HomeController extends Controller
 
             ->paginate(10);
 
+            $question_cust=  DB::table('question_bodies')
+
+            ->join('question_details', 'question_bodies.question_id', '=', 'question_details.question_id')
+            ->join('question_matrices', 'question_details.question_id', '=', 'question_matrices.question_id')
+
+            ->where('question_matrices.user_id', Auth::user()->id)
+
+            ->orderBy('question_details.question_deadline', 'desc')
+
+            ->paginate(10);
+
+
        // dd(Auth::user());
         if(Auth::user()-> role == 'cust')
         {
           return view('cust.home', 
             [
-                'question' => $question
+                'question' => $question_cust
             ]
         );
-          
+
         }
 
         return view('tutor.home', 

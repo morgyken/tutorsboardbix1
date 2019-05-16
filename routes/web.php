@@ -58,6 +58,16 @@ Route::any('file-downloads/{question_id}/{messageid}/{filename}/', ['as'=>'respo
 	
 		'uses' =>'UserQuestionController@ResponseDownloads']);
 
+Route::post('post-question',array('as'=>'cust.post.questions','uses'=>'CustomerAskQuestionController@postQuestion'));
+
+Route::get('post-deadlinePric',array('as'=>'cust-deadlinePrice',
+
+	'uses'=>'CustomerAskQuestionController@CustgetQuestionPrice'));
+
+	Route::post('PostQuestionPriceDeadline',array('as'=>'CustPostQuestionPrice',
+		
+	'uses'=>'CustomerAskQuestionController@postQuestionDetails'));
+
 
 
 Route::prefix('admin')->group(function (){

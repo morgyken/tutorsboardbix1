@@ -83,7 +83,7 @@
                 <div class="row">   
                 <hr class="type_1">  
 
-                    @include('part.nav-left')
+                    @include('part.cust-nav-left')
 
                       <div class="col-lg-9">
                         <div class="blog_left_sidebar">
@@ -186,7 +186,7 @@
 
                   
                     <div class="col-xl-12">
-                        <form method="post" action="{{route('post-questions')}}"  enctype="multipart/form-data">
+                        <form method="post" action="{{route('cust.post.questions')}}"  enctype="multipart/form-data">
 
                         <div class="form-group">
                           <input type="" placeholder="Topic" class="form-control"   name="topic">
