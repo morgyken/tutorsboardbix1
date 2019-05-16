@@ -18,11 +18,7 @@ class AdminModel extends Authenticatable
         'name', 'email', 'password', 'title'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+
     protected $hidden = [
         'password', 'remember_token' ];
     
@@ -31,6 +27,5 @@ class AdminModel extends Authenticatable
     {
         $this->notify( new AdminResetPasswordNotification($token));
     }
-
 
 }

@@ -29,6 +29,8 @@ Route::any('/question_det/{question_id}', [ 'as'=>'user-question_det', 'uses'=>'
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//Route::get('/student-home', 'StudentHomeController@index')->name('cust.home');
+
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
 
@@ -150,22 +152,13 @@ Route::get('/categories', array('as'=>'categories',
 
 Route::get('/academic-level', array( 'as'=>'academic-level', 'uses' => 'AutoComplete@AcademicLevel'));
 
-//Auth::routes();
-
-
-
-//profile pics
 
 //Route::get('/profile-pic-view/{view}',array('as'=>'profile-pic-view','uses'=>'UserController@ProfilePicView'));
 Route::post('/profile-pic/',array('as'=>'profile-pic','uses'=>'UserController@ProfilePic'));
 
 //Route::get('sample',array('as'=>'sample','uses'=>'DateTimeController@getDeadlineInSeconds12'));
 
-//post payments
-
 Route::post('/make-payment', ['uses'=>'AskQuestionController@postPayment', 'as'=>'post.payment']);
-
-
 
 Route::get('all-questions/{status?}',
 	array(

@@ -61,5 +61,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'assigned' =>  \App\Http\Middleware\AssignedQuestions::class,
         'assign' => \App\Http\Middleware\AssignQuestions::class,
+       
     ];
 }

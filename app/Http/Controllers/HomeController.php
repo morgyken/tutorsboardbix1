@@ -39,7 +39,16 @@ class HomeController extends Controller
 
             ->paginate(10);
 
-           // dd($question);
+       // dd(Auth::user());
+        if(Auth::user()-> role == 'cust')
+        {
+          return view('cust.home', 
+            [
+                'question' => $question
+            ]
+        );
+          
+        }
 
         return view('tutor.home', 
             [
