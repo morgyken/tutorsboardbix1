@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Srmklive\PayPal\Services\ExpressCheckout;
+use Srmklive\PayPal\Services\AdaptivePayments;
 
 use Auth;
 
@@ -21,33 +22,29 @@ class PaypalPayments extends Controller
 	public function PayWithPaypal(Request $request, $price)
    {
    	
-	   $provider = new ExpressCheckout;
+	   	$provider = new ExpressCheckout;
 
-	   $price = number_format($price, 2);
+	   	$price = number_format($price, 2);
 
-	   $this->price = $price;
+	   	$this->price = $price;
 
+	  	$request->session()->put('pricefinal',  $price);
 
-	   $data = $this->paymentData();
-
-
+	   	$data = $this->paymentData($this->price);
 
 		$response = $provider->setExpressCheckout($data);
 
-		//dd($response);
-
 		return redirect($response['paypal_link']);
-
    }
   
-	private function paymentData (){
+	protected function paymentData ($price){
 
 
 		$data = [];
 		$data['items'] = [
 		    [
 		        'name' => "Question Heading",
-		        'price' => $this->price,
+		        'price' => $price,
 		        'qty' => 1
 		    ],
 		    
@@ -55,18 +52,19 @@ class PaypalPayments extends Controller
 
 		//$data['name'] = Auth::user()->username;
 
-		$data['invoice_id'] = $data['invoice_id'] = uniqid();;
+		$data['invoice_id'] = \Session::get('receiptNo');
 
 		$this->invoiceID = $data['invoice_id']; 
-		
+
 		$data['invoice_description'] = "Payment for an Essay";
 
 		$data['return_url'] = route('paypal-callback');
 
 		$data['cancel_url'] = route('paypal-error');
 
-	
-		$data['total'] = $this->price;
+		$data['total'] = $price;
+
+		//dd($data);
 
 		return $data;
 
@@ -78,30 +76,36 @@ class PaypalPayments extends Controller
 
 		$token = $request->token;
 
-		$data = $this->paymentData($this->price);
+		$price = \Session::get('pricefinal');
+
+		$data = $this->paymentData($price);
+
+		//dd($data);
 
 		$PayerID = $request->PayerID;
 
+		//dd($PayerID);
+
 		$response = $provider->getExpressCheckoutDetails($token);
 
-		$invoiceID = $this->invoiceID;
+		$invoiceID = $response['INVNUM'] ?? \Session::get('receiptNo');
 		
-		$provider->doExpressCheckoutPayment($data, $token, $PayerID);
-		
+		$response = $provider->doExpressCheckoutPayment($data, $token, $PayerID); //Failure
 
+		//dd($response);
+		
 		// The $token is the value returned from SetExpressCheckout API call
 
-		$response = $provider->createBillingAgreement($token);
-
+		//$response = $provider->createBillingAgreement($token);
 
 		$response = $provider->getTransactionDetails($token);
 
-		if($response['ACK'] == 'Failure')
+		//dd($response);
 
-		 	retturn redirect()-> route('paypal-error');
+		$qID = \Session::get('question_id');
 
 
-		return redirect()->route('success');
+		return redirect()->route('home');
 		
 	}
 

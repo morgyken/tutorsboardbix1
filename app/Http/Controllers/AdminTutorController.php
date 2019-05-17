@@ -31,24 +31,10 @@ class AdminTutorController extends Controller
 
             ->orderBy('question_bodies.created_at', 'desc')
 
-            ->paginate(25);
-
-    
+            ->paginate(25);    
 
       return view('admin.questions', ['questions'=> $questions]);    
 
     }
-
-
-	//Pay Tutors
-
-
-	//Reassign Questions 
-
-
-	//Block Tutor 
-
-
-	//Approve tutor 
 
 }

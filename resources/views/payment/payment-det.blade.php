@@ -147,9 +147,10 @@
                                                         </tbody>
                                                     </table>
                                                     <form method="get" action="{{route('get.paypal', [ 'total' => $total]) }}">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                                                 <button type="submit" class="btn btn-success btn-lg btn-block">
-                                                       Pay Now   <span class="glyphicon glyphicon-chevron-right"></span>
+                                                        <button type="submit" class="btn btn-success btn-lg btn-block">
+                                                        Pay Now   <span class="glyphicon glyphicon-chevron-right"></span>
                                                     </button>
                                                     </form>
                                                     </td>

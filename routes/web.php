@@ -71,6 +71,8 @@ Route::get('post-deadlinePric',array('as'=>'cust-deadlinePrice',
 	'uses'=>'CustomerAskQuestionController@CustpostQuestionDetails'));
 
 //paypal routes
+Route::group(['middleware' => ['auth']], function() {
+    // your routes
 
 Route::get('payment-with-paypal/{price}',
 	['uses' => 'PaypalPayments@PayWithPaypal', 'as' =>'get.paypal']);
@@ -94,6 +96,8 @@ Route::get('/payment/error', function () {
     return view('payment.error');
 
 })->name('paypal-error');
+
+});
 
 //paypal routes 
 
@@ -165,7 +169,6 @@ Route::group(['middleware' => 'web'], function () {
 Route::get('/', function () {  return view('gen.index1'); })->name('general');
 
 
-
 Route::get('/sample2', function () {  return view('quest.ask-question-12'); });
 
 Route::get('/suspensions', array('as'=>'sus',
@@ -189,7 +192,6 @@ Route::get('/categories', array('as'=>'categories',
 
 Route::get('/academic-level', array( 'as'=>'academic-level', 'uses' => 'AutoComplete@AcademicLevel'));
 
-
 //Route::get('/profile-pic-view/{view}',array('as'=>'profile-pic-view','uses'=>'UserController@ProfilePicView'));
 Route::post('/profile-pic/',array('as'=>'profile-pic','uses'=>'UserController@ProfilePic'));
 
@@ -207,7 +209,6 @@ Route::get('all-questions/{status?}',
 
 Route::get('get-payment/{myurl?}/{tutorid?}',array('as'=>'get-payment','uses'=>'PaymentController@getPayments'));
 
-
 Route::post('post-payment',array(
 	'as'=>'paytutor',
 	'uses'=>'PaymentController@postPayments'));
@@ -219,7 +220,6 @@ Route::post('post-payment',array(
 
 Route::post('/post-answer/{question_id}', ['as' =>'post.answer', 'uses' => 'QuestionController@PostAnswer']);
 
-
 Route::get('questions-answered',array('as'=>'questions-answered','uses'=>'AdminController@QuestionsAnswered'));
 
 /*
@@ -230,9 +230,7 @@ Route::get('questions-answered',array('as'=>'questions-answered','uses'=>'AdminC
 
 Route::post('/post-admin-comments/{question_id}', ['as'=> 'post-comments1', 'uses' => 'QuestionController@PostAdminComments']);
 
-
 Route::post('/post-comments/{question_id}', ['as'=> 'post-comments', 'uses' => 'QuestionController@PostComments']);
-
 
 Route::post('/autocomplete', array('as' => 'autocomplete', 'uses'=>'SearchController@autocomplete'));
 
@@ -242,10 +240,7 @@ Route::post('autocomplete-search',array('as'=>'autocomplete.search','uses'=>'Sea
 
 Route::post('autocomplete-ajax',array('as'=>'searchajax','uses'=>'SearchController@autoComplete'));
 
-
-
 Route::get('post-payment-request/{amount}',array('as'=>'post-payment-request','uses'=>'QuestionController@PostPaymentRequest'));
-
 
 Route::post('tut-payment12',array('as'=>'tut-payment','uses'=>'QuestionController@PayRequests'));
 //get tutor  
@@ -285,7 +280,6 @@ Route::get('adm-questions', array('as'=>'adm-questions','uses'=>'AdminController
 
 Route::post('adm-search', array('as'=>'adm-search','uses'=>'AdminController@AdmSearchResults'));
 
-
 //get customer payments
 Route::get('make-cust-payments', array('as'=>'get-cust-payments','uses'=>'CustomerPayments@getCustPayment'));
 
@@ -315,10 +309,8 @@ Route::get('/get-payment-meta', 'AskQuestionController@getMetadata')->name('get.
 //post payment metadata
 Route::any('/payment_meta', 'AskQuestionController@PostMetadata')->name('post.meta');
 
-
 Route::get('/tutor-auto',
 	[ 'as'=>'tutor-auto', 'uses'=>'AutoComplete@Tutor']);
-
 
 //questio bids
 
@@ -326,36 +318,18 @@ Route::get('/bids/{question_id}/',
 
 	[ 'as'=>'get-bids', 'uses'=>'QuestionController@GetTBids']);
 
-
-
 Route::get('home/{params?}', [ 'as'=>'home', 'uses'=>'HomeController@index']);
 
-//paypal routes
-
-
-
-
-
 });
-
-
-Route::get('paypal/{price}/{qid}', 'PaymentControllerOne@payWithpaypal');
-
-// route for check status of the payment
-Route::get('status', 'PaymentControllerOne@getPaymentStatus');
-
-Route::get('/payment/success/{qid}', 'PaymentControllerOne@getPaymentSuccess');
-
-Route::get('/payment/failed/{qid}', 'PaymentControllerOne@getPaymentFailed');
-
-Route::get('/admin/questions', array('as'=>'adm.questions',
-	'uses' => 'AdminTutorController@AdminQuestionsView'));
-//Route::get('/sample', function () {  return view('layouts.index-template'); });
 
 //admin routes starts here
 Route::get('adm-tut-payments',array('as'=>'adm-tut-payments','uses'=>'HomeController@viewTutorPayment'));
 
 Route::get('adm-dashboard',array('as'=>'adm-dashboard','uses'=>'AdminController@AdmDashboard'));
+
+Route::get('/admin/questions', array('as'=>'adm.questions',
+	'uses' => 'AdminTutorController@AdminQuestionsView'));
+//Route::get('/sample', function () {  return view('layouts.index-template'); });
 
 
 });
