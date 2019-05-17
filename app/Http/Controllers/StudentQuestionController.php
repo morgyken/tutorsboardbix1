@@ -280,7 +280,7 @@ class StudentQuestionController extends Controller
 
       if(Auth::check())
        {
-                return view ('tutor.question-det',
+                return view ('cust.question-det',
                   [
                     // class for html data
 

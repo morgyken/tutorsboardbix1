@@ -104,6 +104,9 @@
                 </div>
             </div>
         </footer>
+        <!-- Button trigger modal -->
+
+
         <!--================ End footer Area  =================-->
                
         <!-- Optional JavaScript -->

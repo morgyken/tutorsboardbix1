@@ -1,4 +1,4 @@
-@extends('layouts.layout-home')
+@extends('layouts.layout-cust')
 
 @section ('content')
 
@@ -26,8 +26,9 @@
         <section class="blog_area p_120 single-post-area">
             <div class="container">
                 <div class="row"> 
+
                   
-                    @include('part.nav-left-tutor')
+                    @include('part.cust-nav-left')
                     <div class="col-lg-9">
                         <div class="card">
                             <div class="card-body">
@@ -105,74 +106,49 @@
                                     </p>
                             @endforeach
 
-                            <div class="news_d_footer">
-
-                                @if($status != 'taken')
-                            
-                                <div class="col-md-6">
-                                    <button class="btn btn-warning btn-rounded mb-4"  data-toggle="modal" data-target="#modal-take"> Take Order</button>
-                                </div>
-
-                             
-
-                                <div class="col-md-6" style="text-align: right;">
-                                    
-                                     <button type="button" class="btn btn-primary btn-rounded mb-4"  data-toggle="modal" data-target="#modal-bid">
-                                       Apply for Order
-                                      </button>
-                                </div>
-                                   @else
-                                    <div class="col-md-8">
-                                    <p> The Question has Been Assigned to tutor {{ Auth::user()->name}} </p>
-                                </div> 
-
-
-                                 <div class="col-md-4" style="text-align: right;">
-                                    <button class="btn btn-warning btn-rounded mb-4"  data-toggle="modal" data-target="#modal-optout">Opt out</button>
-                                </div> 
-
-                                @endif                             
-                               
-                            </div>  
-
-                                       
+                                                                   
                         @if($status != 'taken')
-                            <div class="news_d_footer">                               
+                            <div class="news_d_footer" style="background:yellow">                               
                                <h5> The Order is Still available </h5>
                             </div>
                         @else
+                            <div class="news_d_footer" style="background: blue;color: white">                               
+                               <h5> The Order has been assigned to {{$tutor}} </h5>
+                            </div>
+                        @endif            
                         
-                            @if(Auth::user()->name !=  $tutor)
-                                <div class="news_d_footer">                               
-                                   <h5> The Order has been assigned to {{$tutor}} </h5>
-                                </div>
-                            @else
-                                <div class="news_d_footer">                               
+                            <div class="news_d_footer">                               
                                <h5> Conversation History </h5>
                                 </div>
 
                                 <div class="comments-area">
                                     @foreach($messages as $comm)
-                            
+
+                                    @if($comm->title == 'Answer')                            
+                                    <div class="comment-list" style="background:#d5f9cc">
+                                    @else
                                     <div class="comment-list">
+                                    @endif
                                         <div class="single-comment justify-content-between d-flex">
                                             <div class="user justify-content-between d-flex">
                                                 <div class="thumb">
                                                     <img src="{{ URL::asset('opium/img/blog/c1.jpg ')}}" alt="">
                                                 </div>
                                                 <div class="desc">
-                                                    <h5><a href="#"> Morgyken</a></h5>
-                                                       {{ $comm->created_at }}: {{ $comm->title }}
-                                                    <p class="date"> </p>
+                                                    <p><h5><a href="#">{{ $comm -> role}} </a>
+                                                    
+                                                    Type: {{ $comm -> title}} </h5></p> 
+
+                                                    <p class="date">{{ $comm->created_at }}: {{ $comm->title }} </p>
                                                     <p class="comment">
                                                        {{ $comm->message }}
                                                     </p>
-                                                </div> 
-                                               
+                                                </div>                                            
 
                                             </div>                                    
                                         </div>
-                                    </div>
+                                    
+
                                     <?php 
                                     $resfiles = \App\Http\Controllers\UserQuestionController::ResponseFiles($question->question_id,  $comm->messageid);
 
@@ -190,10 +166,9 @@
                                             <i class="icon-download-alt">{{$file['basename'] }} </i></a>   
                                             </p>
                                         @endforeach 
-                                    </div>       
-                                    <div class="news_d_footer">     
-                                                
                                     </div>
+                                </div>       
+                            
                             
                                     @endforeach  
                                     
@@ -206,18 +181,18 @@
                                     <form action="{{ route('user-messages', ['question' =>$question->question_id])}}" method="POST" enctype="multipart/form-data">
 
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                       
+                                        
                                         <div class="form-group">
                                             <label>Send Message to: </label>
 
-                                            <input type="radio" name="title" value="Student"> Student  
+                                            <input type="radio" name="title" value="Tutor"> Tutor  
                                             <input type="radio" name="title" value="Admin"> Admin  
-                                            <input type="radio" name="title" value="Answer"> Answer 
-                                
+                                                                            
                                             <input type="hidden" name="qid" value="{{$question->question_id}}">
                                         </div>
-                                        
                                         <div class="form-group">
+                                            
+
                                             <textarea class="form-control mb-10" rows="5" name="text" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
                                         </div>
                                             <div class="form-group"> 
@@ -233,26 +208,12 @@
                                         <button class="primary-btn submit_btn">Post Answer or Comment</button>
                                     </form>
                                 </div>
-                                @endif
-                        @endif
+                                                   
                     </div>
                 </div>
             </div>
         </div>
         </section>
 
-        <!-- Button trigger modal -->
-
-
-        @include('tutor.opt-out')
-
-        @include('tutor.make-bids')
-
-
-        @include('tutor.take-question')  
-
-        <!--================Blog Area =================-->
-        
-        <!--================ start footer Area  =================-->	
         
         @endsection

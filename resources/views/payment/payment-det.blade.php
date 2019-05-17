@@ -31,12 +31,7 @@
                             <article class="blog_style1"; style="text-align: center; ">
                                 
                                 <a class="logo" href="#"><img src="{{ URL::asset('opium/img/logo.png ')}}" alt=""></a>
-                            </article>
-
-                             <article class="blog_style1"; style="text-align: center;">
-                               
-                               <a href="#" class="btn btn-secondary btn-lg btn-rounded mb-4" data-toggle="modal" data-target="#frameModalBottom"><h3>Ask Question Now! </h3></a>
-                            </article>
+                            </article>                            
                           
                             <article class="blog_style1";">
                                 

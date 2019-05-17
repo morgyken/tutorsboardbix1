@@ -26,6 +26,8 @@ Route::post('/update-question/{question_id}', array('as' => 'update-question', '
 
 Route::any('/question_det/{question_id}', [ 'as'=>'user-question_det', 'uses'=>'UserQuestionController@NewQuestionDetails'] );
 
+Route::any('/cust-question-det/{question_id}', [ 'as'=>'cust-question-det', 'uses'=>'StudentQuestionController@NewQuestionDetails'] );
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 

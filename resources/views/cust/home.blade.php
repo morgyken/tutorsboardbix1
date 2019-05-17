@@ -1,4 +1,4 @@
-@extends('layouts.layout-home')
+@extends('layouts.layout-cust')
 
 @section ('content')
 
@@ -63,17 +63,6 @@
     }
     ?>
 
-    <div class="clearfix">
-        <div class="col-md-10">
-            <h4>Question Detail  </h4>
-        </div>
-        <div class="col-md-2">
-            <h4> Other Details</h4>
-        </div>
-
-    </div>
-<hr>
-
 
 </script>
         
@@ -120,7 +109,7 @@
                                                 <li class="list-group-item" >
                                                     <div class="row"> 
                                                         <div class="col-md-2">
-                                                       <a href="{{route('question_det', ['question_id' => $value->question_id])}}"> {{ $value->question_id }} </a>
+                                                       <a href="{{route('cust-question-det', ['question_id' => $value->question_id])}}"> {{ $value->question_id }} </a>
                                                         </div> 
 
                                                          <div class="col-md-8" style="text-align: left;font-size:92%;"">

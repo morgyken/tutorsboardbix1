@@ -64,8 +64,6 @@ class PaypalPayments extends Controller
 
 		$data['total'] = $price;
 
-		//dd($data);
-
 		return $data;
 
 	}
@@ -80,11 +78,7 @@ class PaypalPayments extends Controller
 
 		$data = $this->paymentData($price);
 
-		//dd($data);
-
 		$PayerID = $request->PayerID;
-
-		//dd($PayerID);
 
 		$response = $provider->getExpressCheckoutDetails($token);
 
@@ -92,15 +86,7 @@ class PaypalPayments extends Controller
 		
 		$response = $provider->doExpressCheckoutPayment($data, $token, $PayerID); //Failure
 
-		//dd($response);
-		
-		// The $token is the value returned from SetExpressCheckout API call
-
-		//$response = $provider->createBillingAgreement($token);
-
 		$response = $provider->getTransactionDetails($token);
-
-		//dd($response);
 
 		$qID = \Session::get('question_id');
 

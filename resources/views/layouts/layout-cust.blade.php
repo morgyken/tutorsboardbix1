@@ -84,7 +84,7 @@
         <!--================Header Menu Area =================-->
         <header class="header_area">
 			<div class="main_menu">
-				@include('part.nav-admin')
+				@include('part.nav-gen')
 			</div>
 			
         </header>
@@ -104,6 +104,7 @@
                 </div>
             </div>
         </footer>
+
         <!--================ End footer Area  =================-->
                
         <!-- Optional JavaScript -->
