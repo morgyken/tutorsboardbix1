@@ -216,6 +216,7 @@ class StudentQuestionController extends Controller
 
       $user =  AdminModel::where('id', Auth::user()->id);
 
+
       $messages = MessagesModel::where('question_id', $question_id)->get();
 
        $question =  DB::table('question_bodies')
@@ -225,6 +226,11 @@ class StudentQuestionController extends Controller
             ->where('question_details.question_id', '=', $question_id)
 
             ->first();
+
+        //select who posted the question 
+
+        $customer = DB::table('users')->select('name') ->where('id', $question->user_id)-> first();
+
 
         $time = new DateTimeModel();
 
@@ -314,6 +320,8 @@ class StudentQuestionController extends Controller
                     'messages' => $messages,
 
                     //'commfiles' => $comm_files
+
+                    'cust' => $customer->name,
 
 
                   ]);

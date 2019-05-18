@@ -25,6 +25,7 @@
         <!--End Uikit -->
         <!-- main css -->
         <link rel="stylesheet" href="{{ URL::asset('opium/css/style.css')}}">
+         <link rel="stylesheet" href="{{ URL::asset('css/theme1e.css')}}">
         <link rel="stylesheet" href="{{ URL::asset('opium/css/responsive.css')}}">
             <!-- Include Editor style. -->
         <link href='https://cdn.jsdelivr.net/npm/froala-editor@2.9.1/css/froala_editor.min.css' rel='stylesheet' type='text/css' />

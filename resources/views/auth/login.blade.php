@@ -13,7 +13,7 @@
             <div class="container">
                 <div class="row">   
                 <hr class="type_1">               
-                    <div class="col-lg-8 col-md-offset-1">
+                    <div class="col-lg-8">
 
                 <div class="blog_right_sidebar">
                             

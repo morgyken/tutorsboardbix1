@@ -71,25 +71,15 @@
                                     
                                 </div>
                         
-                                <div class="float-right" style="margin-top:30px;">
+                                <div class="float-left" style="margin-top:30px;">
                                     <div class="media">
-                                        <div class="media-body">
-                                            <h5>Tutor Morgyken </h5>
-                                            <p>12 Dec, 2017 11:21 am</p>
-                                        </div>
-                                        <div class="d-flex">
-                                            <img src="{{ URL::asset('opium/img/blog/user-img.jpg ')}}" alt="">
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
-
                      
-                            {!! htmlspecialchars_decode($question-> question_body) !!}
-
-                   
+                            {!! htmlspecialchars_decode($question-> question_body) !!}             
                              
-
                             <div class="news_d_footer">                               
                                <h5> File Uploads  </h5>
                             </div>
@@ -112,8 +102,9 @@
                                <h5> The Order is Still available </h5>
                             </div>
                         @else
-                            <div class="news_d_footer" style="background: blue;color: white">                               
+                            <div class="news_d_footer" style="background: #88b0ef; color: white">                               
                                <h5> The Order has been assigned to {{$tutor}} </h5>
+                    
                             </div>
                         @endif            
                         
@@ -125,7 +116,7 @@
                                     @foreach($messages as $comm)
 
                                     @if($comm->title == 'Answer')                            
-                                    <div class="comment-list" style="background:#d5f9cc">
+                                    <div class="comment-list" style="background:#98ef8b; padding: 10px; border-radius: 5px">
                                     @else
                                     <div class="comment-list">
                                     @endif
@@ -154,6 +145,7 @@
 
                                     ?>
                                     <div class="col-md-12"> 
+                                        <p class="comment"> Click Below to download your files! </p>
                                         @foreach($resfiles as $file)
 
                                             <p class="down-files"><a href="{{route('response-download',
@@ -205,9 +197,25 @@
                                                   </div>
                                             </div>      
                                       
-                                        <button class="primary-btn submit_btn">Post Answer or Comment</button>
+                                        <button class="primary-btn submit_btn">Post Comment</button>
                                     </form>
                                 </div>
+                                <div class="comment-form" style="background:#30593d; padding: 10px; border-radius: 5px">
+
+                                <form action="{{ route('user-messages', ['question' =>$question->question_id])}}" method="POST" enctype="multipart/form-data">
+
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        
+                                        <div class="form-group">
+
+
+                                            <input type="radio" class="col-md-6" name="title" value="Tutor"> Mark as Complete 
+                                            <input type="radio"  class="col-md-6" name="title" value="Admin"> Recomend revision                                                                    
+                                        </div>
+                                    
+                                        <button class="btn btn-warning btn-block" type="submit">Mark as complete</button>
+                                </form>
+                            </div>
                                                    
                     </div>
                 </div>

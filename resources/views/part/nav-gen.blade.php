@@ -10,8 +10,8 @@
 						<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 							<ul class="nav navbar-nav menu_nav">
-								<li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li> 
-								<li class="nav-item"><a class="nav-link" href="category.html">Category</a></li>
+								<li class="nav-item active"><a class="nav-link" href="{{route('home')}}">Home</a></li> 
+								<li class="nav-item"><a class="nav-link" href="/">Available Jobs</a></li>
 								<li class="nav-item"><a class="nav-link" href="archive.html">Archive</a></li>
 								<li class="nav-item submenu dropdown">
 									<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
