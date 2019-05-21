@@ -139,16 +139,6 @@ public function AssignQuestion (Request $request, $question, $tutor=null)
 
     $count_active = count($active);
 
-
-    //check for admin who is in the tuting 
-
-    //check if a team member is tutoring
-    
-    //check if senior 
-
-    
-    ///check if Junior 
-
     
     $this->AssignQuestions($question); //assign express if admin
        
@@ -231,8 +221,22 @@ public function AssignQuestion (Request $request, $question, $tutor=null)
                         'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                     ]
                 );
-        }
-        
+
+              DB::table('assign_questions')
+                ->insert(
+                    [       
+                                             
+                        'status' =>$status,
+
+                        'question_id' => $question,
+                 
+                        'tutor_id' => Auth::user()->id,
+
+                        'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                    ]
+                );
+        } 
+
         return redirect('question_det/'.$question);
 
     }
@@ -270,6 +274,9 @@ public function AssignQuestion (Request $request, $question, $tutor=null)
                         'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                     ]
                 );
+        // delete from assign questions table 
+
+            DB::table('assign_questions')->where('question_id', $question)->delete();
 
         return redirect('question_det/'.$question);
 

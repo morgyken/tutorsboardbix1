@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::get('/sample', function () {
     return view('question.question-det');
 });
+Route::get('mydates', 'DateTimeController@TimeDifference');
    
 Auth::routes();
 
@@ -247,33 +248,6 @@ Route::get('post-payment-request/{amount}',array('as'=>'post-payment-request','u
 Route::post('tut-payment12',array('as'=>'tut-payment','uses'=>'QuestionController@PayRequests'));
 //get tutor  
 
-Route::get('tut-profile',
-	array('as'=>'tut-profile','uses'=>'HomeController@getTutProfile'));
-//post tutor profile
-Route::post('tut-profile',
-	array('as'=>'post.tut-profile','uses'=>'TutorProfileController@postTutProfile'));
-
-//get tutor proggress
-Route::get('tut-progress',
-	array('as'=>'tut-progress','uses'=>'TutorProfileController@getTutProgress'));
-//post tutor progress
-Route::post('tut-progress',
-	array('as'=>'tut-progress','uses'=>'TutorProfileController@postTutProgress'));
-//get tutor profile
-Route::get('tut-account',
-	array('as'=>'tut-account','uses'=>'TutorProfileController@getTutAccount'));
-
-//post tutor profile
-Route::post('tut-account',
-	array('as'=>'tut-account','uses'=>'TutorProfileController@postTutAccount'));
-
-//post tutor profile
-
-Route::post('tut-education',
-	array('as'=>'tut-education','uses'=>'TutorProfileController@postTutEducation'));
-
-//get all tutors
-Route::get('adm-tutors', array('as'=>'adm-tutors','uses'=>'AdminController@admTutors'));
 
 //return all adm questions
 Route::get('adm-questions', array('as'=>'adm-questions','uses'=>'AdminController@AdmQuestions'));
@@ -337,3 +311,32 @@ Route::get('/admin/questions', array('as'=>'adm.questions',
 });
 
 }); 
+
+
+Route::get('tut-profile',
+	array('as'=>'tut-profile','uses'=>'HomeController@getTutProfile'));
+//post tutor profile
+Route::post('tut-profile',
+	array('as'=>'post.tut-profile','uses'=>'TutorProfileController@postTutProfile'));
+
+//get tutor proggress
+Route::get('tut-progress',
+	array('as'=>'tut-progress','uses'=>'TutorProfileController@getTutProgress'));
+//post tutor progress
+Route::post('tut-progress',
+	array('as'=>'tut-progress','uses'=>'TutorProfileController@postTutProgress'));
+//get tutor profile
+Route::get('tut-account',
+	array('as'=>'tut-account','uses'=>'TutorProfileController@getTutAccount'));
+
+//post tutor profile
+Route::post('tut-account',
+	array('as'=>'tut-account','uses'=>'TutorProfileController@postTutAccount'));
+
+//post tutor profile
+
+Route::post('tut-education',
+	array('as'=>'tut-education','uses'=>'TutorProfileController@postTutEducation'));
+
+//get all tutors
+Route::get('adm-tutors', array('as'=>'adm-tutors','uses'=>'AdminController@admTutors'));

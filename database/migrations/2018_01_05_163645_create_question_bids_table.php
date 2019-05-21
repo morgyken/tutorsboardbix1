@@ -18,7 +18,7 @@ class CreateQuestionBidsTable extends Migration
             $table->timestamps();
             $table->rememberToken();
             $table->integer('question_id');
-            $table->integer('tutor_id')->unique();
+            $table->integer('tutor_id');
             $table->integer('bidpoints');
             $table->integer('bid_price');
           

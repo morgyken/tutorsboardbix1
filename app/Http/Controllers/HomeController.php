@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use DB;
 
-class HomeController extends Controller
+class HomeController extends UserQuestionController
 {
     /**
      * Create a new controller instance.
@@ -51,12 +51,24 @@ class HomeController extends Controller
             ->paginate(10);
 
 
+        $experience1 = new DateTimeController(); // to get the experience of the tutor
+
+        $experience = $experience1->TimeDifference();
+
+
+         $NoOfQuestions = self::NoOfQuestions(Auth::user()->id);
+
        // dd(Auth::user());
         if(Auth::user()-> role == 'cust')
         {
           return view('cust.home', 
             [
-                'question' => $question_cust
+                'question' => $question_cust, 
+
+                'experience' => $experience,
+
+                'NoOfQuestions' => $NoOfQuestions,
+
             ]
         );
 
@@ -64,7 +76,11 @@ class HomeController extends Controller
 
         return view('tutor.home', 
             [
-                'question' => $question
+              'question' => $question,
+
+              'experience' => $experience,
+
+              'NoOfQuestions' => $NoOfQuestions,
             ]
         );
     }
@@ -125,17 +141,17 @@ class HomeController extends Controller
 
                       ->join('question_matrices', 'question_details.question_id', '=', 'question_matrices.question_id') 
 
-                        ->where('user_id', Auth::user()->id)
+                      ->where('user_id', Auth::user()->id)
 
-                        ->where('status', 'Rated')
+                      ->where('status', 'Rated')
 
-                        ->orwhere('status', 'rated')
+                      ->orwhere('status', 'rated')
 
-                        ->whereDate('question_matrices.updated_at', '>', \Carbon\Carbon::today()->subDays(14)->toDateString())
+                      ->whereDate('question_matrices.updated_at', '>', \Carbon\Carbon::today()->subDays(14)->toDateString())
 
-                         ->whereDate('question_matrices.updated_at', '<', \Carbon\Carbon::today()->subDays(7)->toDateString())
+                      ->whereDate('question_matrices.updated_at', '<', \Carbon\Carbon::today()->subDays(7)->toDateString())
 
-                        ->sum('tutor_price');
+                      ->sum('tutor_price');
 
           
           return $sumOfCurrent;
@@ -154,15 +170,15 @@ class HomeController extends Controller
 
                       ->join('question_matrices', 'question_details.question_id', '=', 'question_matrices.question_id') 
 
-                        ->where('user_id', Auth::user()->id)
+                      ->where('user_id', Auth::user()->id)
 
-                        ->where('status', 'Rated')
+                      ->where('status', 'Rated')
 
-                        ->orwhere('status', 'rated')
+                      ->orwhere('status', 'rated')
 
-                        ->whereDate('question_matrices.updated_at', '<', \Carbon\Carbon::today()->subDays(14)->toDateString())
+                      ->whereDate('question_matrices.updated_at', '<', \Carbon\Carbon::today()->subDays(14)->toDateString())
 
-                        ->sum('tutor_price');
+                      ->sum('tutor_price');
 
           return $sumOfCurrent;
 
@@ -178,15 +194,15 @@ class HomeController extends Controller
 
                       ->join('question_matrices', 'question_details.question_id', '=', 'question_matrices.question_id') 
 
-                        ->where('user_id', Auth::user()->id)
+                      ->where('user_id', Auth::user()->id)
 
-                        ->where('status', 'Assigned')
+                      ->where('status', 'Assigned')
 
-                        ->orwhere('status', 'assigned')
+                      ->orwhere('status', 'assigned')
 
-                        ->whereDate('question_matrices.updated_at', '>', \Carbon\Carbon::today()->subDays(7)->toDateString())
+                      ->whereDate('question_matrices.updated_at', '>', \Carbon\Carbon::today()->subDays(7)->toDateString())
 
-                        ->sum('tutor_price');
+                      ->sum('tutor_price');
 
           return $sumOfCurrent;
 
@@ -307,10 +323,15 @@ public function GetWidthdrawn()
     public function PostSuspension()
     {
       $tutor = DB::table('question_history_tables')
+
               ->select('user_id')
+
               ->where('status', 'Reassigned')
+
               ->orwhere('status', 'Widthdrawn')
+
               ->whereDate('created_at', '>', \Carbon\Carbon::today()->subMonth()->toDateString())
+
               ->get();
 
       //change obect to array
@@ -336,7 +357,7 @@ public function GetWidthdrawn()
                     'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
                 ]);
      
-      }
+        }
 
       }
       

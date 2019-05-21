@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use DB;
 
+use Carbon;
+
 class DateTimeController extends Controller
 {
 
@@ -115,6 +117,22 @@ public static function getDeadlineInSeconds12($deadline){
         $Difference = ($TimeEnd - $TimeStart);
 
         return $Difference;
+    }
+
+    public  function TimeDifference ()
+    {
+        $date = \Auth::user()->created_at;
+
+        $datetime1 = new \DateTime($date);//start time
+    
+        $datetime2 = new \DateTime('now');//end time
+        
+        $interval = $datetime1->diff($datetime2);
+        
+        $diff = $interval->format('%Y years %m months' );//00 years 0 months 0
+
+        return $diff. ' ago';
+
     }
       
 }

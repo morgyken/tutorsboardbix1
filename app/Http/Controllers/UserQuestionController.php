@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\FileUploadController;
 use App\AdminModel;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\DateTimeController;
 use App\ MessagesModel;
 
 class UserQuestionController extends Controller
@@ -211,6 +212,17 @@ class UserQuestionController extends Controller
 
     }
 
+     public static function NoOfQuestions($user_id)
+    {
+
+    $assigned = DB::table('assign_questions') ->where('tutor_id', Auth::user()->id)->get();
+
+    $NoOfQuestions = count($assigned);
+
+    return $NoOfQuestions;
+
+    }
+
     public function NewQuestionDetails($question_id)
     {
 
@@ -257,14 +269,16 @@ class UserQuestionController extends Controller
 
         //Given the following 
 
-        $tutor= '';
+        $experience1 = new DateTimeController(); // to get the experience of the tutor
 
+        $experience = $experience1->TimeDifference();
+
+        $tutor= '';
 
         $status =  DB::table('question_matrices')
                     ->select('status')
                     ->where('question_id', $question_id)
                     ->first();
-
 
         if($status == null)
         {
@@ -276,7 +290,9 @@ class UserQuestionController extends Controller
         $status = $status->status;
         }
 
-      //  dd($status);
+        // Number of questions per tutor 
+
+        $NoOfQuestions = self::NoOfQuestions(Auth::user()->id);
 
       if(Auth::check())
        {
@@ -303,11 +319,13 @@ class UserQuestionController extends Controller
                     //assigned
                     'status'   => $status,
         
-                    'tutor'   => Auth::User()->name,
-
                     //bids
 
                     'bids' => $bids,
+
+                    //tutor 
+
+                    'tutor' => Auth::user()->name,
 
                     //messages
 
@@ -315,14 +333,25 @@ class UserQuestionController extends Controller
 
                     //'commfiles' => $comm_files
 
+                    'experience' => $experience,
+
+                    //number of Questions 
+
+                    'NoOfQuestions' => $NoOfQuestions,
+
 
                   ]);
 
        }
        else{
             return redirect()-> route('general');
-       }
-    }
+      }
+  }
+
+  public function CheckTutorBid(){
+
+
+  }    
 
     //bid points function
 

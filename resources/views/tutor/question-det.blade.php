@@ -43,6 +43,7 @@
                                 <div class="float-left">
                                     <div class="card">
                                       <div class="card-body">
+                                         <a href="#" style="font-size:18px; font-weight:800;"> Question ID: {{ $question->question_id }}</a>
                                         <a href="#">User ID: {{ $question->user_id }} | 
                                         Posted: {{$question->created_at }}
                                         
@@ -51,20 +52,18 @@
 
                                         | {{ $question->paper_type }}  </a>
                                         
-                                        <a href="#">Subject: {{$question->spacing }} 
-                                        | {{$question->paper_format }}
-                                        | {{$question->lang_style }} </a>
+                                        <a href="#">Spacing: {{$question->spacing }} 
+                                        |Format  {{$question->paper_format }}
+                                        | Style {{$question->lang_style }} </a>
 
-                                        <a href="#">Pages: {{ $question->tutor_price }} |  
+                                        <a href="#">Tutor Price: ${{ $question->tutor_price }} |  
                                         {{ $question->academic_level }} | 
                                        
                                         {{ $question->status }} </a>
 
                                          <a href="#">Urgency: {{ $question->urgency }} | Deadline: {{ $question->question_deadline }} </a> 
 
-                                          <a href="#">Question ID: {{ $question->question_id }} </a> 
-
-                                           <a href="#">Bids: {{ $bids }} </a> 
+                                         <a href="#">Bids: {{ $bids }} </a> 
                                       </div>
                                     </div>
                                     
@@ -141,8 +140,8 @@
                                <h5> The Order is Still available </h5>
                             </div>
                         @else
-                        
-                            @if(Auth::user()->name !=  $tutor)
+
+                            @if(Auth::user()->role != 'tutor')
                                 <div class="news_d_footer">                               
                                    <h5> The Order has been assigned to {{$tutor}} </h5>
                                 </div>
@@ -161,7 +160,7 @@
                                                     <img src="{{ URL::asset('opium/img/blog/c1.jpg ')}}" alt="">
                                                 </div>
                                                 <div class="desc">
-                                                    <h5><a href="#"> Morgyken</a></h5>
+                                                    <h5><a href="#">{{$comm->role  }}</a></h5>
                                                        {{ $comm->created_at }}: {{ $comm->title }}
                                                     <p class="date"> </p>
                                                     <p class="comment">
@@ -191,9 +190,7 @@
                                             </p>
                                         @endforeach 
                                     </div>       
-                                    <div class="news_d_footer">     
-                                                
-                                    </div>
+                                  
                             
                                     @endforeach  
                                     

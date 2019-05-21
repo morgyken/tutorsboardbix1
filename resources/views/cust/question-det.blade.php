@@ -80,7 +80,7 @@
                      
                             {!! htmlspecialchars_decode($question-> question_body) !!}             
                              
-                            <div class="news_d_footer">                               
+                            <div class="news_d_foot``````er">                               
                                <h5> File Uploads  </h5>
                             </div>
 
@@ -103,7 +103,7 @@
                             </div>
                         @else
                             <div class="news_d_footer" style="background: #88b0ef; color: white">                               
-                               <h5> The Order has been assigned to {{$tutor}} </h5>
+                               <h5> The Order has been assigned to {{$tutor->name}} </h5>
                     
                             </div>
                         @endif            

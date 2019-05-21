@@ -4,8 +4,9 @@
                             
                             <aside class="single_sidebar_widget author_widget">
                                 <img class="author_img img-fluid" src="{{ URL::asset('opium/img/blog/author.png ')}}" alt="">
-                                <h4>Charlie Barber: Tutor</h4>
-                                <h5>2 Yrs of Tutoring</h5>
+                                <h4>{{ Auth::user()->name }}: Tutor</h4>
+                            
+                                <h5> {{ $experience}}</h5>
                                 <div class="social_icon">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
                                     <a href="#"><i class="fa fa-twitter"></i></a>
@@ -25,7 +26,7 @@
                                     <li>
                                         <a href="#" class="d-flex justify-content-between">
                                             <p>Assigned</p>
-                                            <p>7</p>
+                                            <p> {{ $NoOfQuestions }}</p>
                                         </a>
                                     </li>
                                     <li>
