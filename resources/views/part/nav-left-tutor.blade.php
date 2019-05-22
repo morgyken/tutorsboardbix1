@@ -1,9 +1,20 @@
-<div class="col-lg-3">
+                             <?php
+
+                                $total = \App\Http\Controllers\TutorPaymentController::TutorNextPayment();
+
+                                $total2 =\App\Http\Controllers\TutorPaymentController::TutorTatalPayment();
+
+                                ?>
+                                <div class="col-lg-3">
                         
                         <div class="blog_right_sidebar">
                             
                             <aside class="single_sidebar_widget author_widget">
-                                <img class="author_img img-fluid" src="{{ URL::asset('opium/img/blog/author.png ')}}" alt="">
+                                <a href=" {{ route('profile-pic-view') }}">
+                                
+
+                                <img class="author_img img-fluid" src="{{ URL::asset('storage/profile/'.Auth::user()->id.'/profile.jpg')}}" alt="">
+                            </a>
                                 <h4>{{ Auth::user()->name }}: Tutor</h4>
                             
                                 <h5> {{ $experience}}</h5>
@@ -13,8 +24,9 @@
                                     <a href="#"><i class="fa fa-github"></i></a>
                                     <a href="#"><i class="fa fa-behance"></i></a>
                                 </div>
+                               
                                 <div class="br"></div>
-                                <h4> Ksh. 244/569 </h4>
+                                <h4> Ksh. {{ $total }}/569 </h4>
 
                                 <div class="br"></div>
                             </aside>

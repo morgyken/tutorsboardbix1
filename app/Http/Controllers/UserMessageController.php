@@ -24,20 +24,60 @@ public function PostMessages(Request $request, $question){
 
     if($request->title = 'Answer')
     {
-       DB::table('revisions_table')->where('question_id', $question)->delete(); // assign questions 
-    }
 
-    DB::table('messages_models')->insert(
-        [      
-            'message' => $request->text,
-            'title' => $request->title,
-            'question_id' => $question,
-            'role' => 'Tutor',
-            'messageid' => $this->messageid,            
-            'user' => Auth::User()->id,            
-            'created_at' =>\Carbon\Carbon::now()->toDateTimeString(),
-            'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
-        ]);
+       DB::table('revisions_table')->where('question_id', $question)->delete(); // assign questions 
+
+       $status = 'answered'; 
+
+
+
+    DB::table('question_matrices')->where('question_id', $question)
+                ->update(
+                [              
+                    'status' =>$status,        
+
+                    'user_id' => Auth::user()->id, 
+                                         
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                ]
+            );        
+
+        DB::table('question_history_tables')
+            ->insert(
+                [       
+                                         
+                    'status' =>$status,
+
+                    'question_id' => $question,
+
+                    'user_id' => Auth::user()->id,
+
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                ]
+            );
+    }
+    else
+    {
+        DB::table('messages_models')->insert(
+                [      
+                    'message' => $request->text,
+
+                    'title' => $request->title,
+                    
+                    'question_id' => $question,
+                    
+                    'role' =>Auth::user()->role,
+                    
+                    'messageid' => $this->messageid,            
+                    
+                    'user' => Auth::user()->name,            
+                    
+                    'created_at' =>\Carbon\Carbon::now()->toDateTimeString(),
+                    
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                ]);
+
+    }
 
         //upload files 
 

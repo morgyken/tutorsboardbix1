@@ -194,8 +194,7 @@ Route::get('/categories', array('as'=>'categories',
 
 Route::get('/academic-level', array( 'as'=>'academic-level', 'uses' => 'AutoComplete@AcademicLevel'));
 
-//Route::get('/profile-pic-view/{view}',array('as'=>'profile-pic-view','uses'=>'UserController@ProfilePicView'));
-Route::post('/profile-pic/',array('as'=>'profile-pic','uses'=>'UserController@ProfilePic'));
+
 
 //Route::get('sample',array('as'=>'sample','uses'=>'DateTimeController@getDeadlineInSeconds12'));
 
@@ -341,7 +340,13 @@ Route::post('tut-account',
 //post tutor profile
 
 Route::post('tut-education',
+	
 	array('as'=>'tut-education','uses'=>'TutorProfileController@postTutEducation'));
 
 //get all tutors
 Route::get('adm-tutors', array('as'=>'adm-tutors','uses'=>'AdminController@admTutors'));
+
+
+Route::get('/profile-pic-view/',array('as'=>'profile-pic-view','uses'=>'UserController@ProfilePicView'));
+
+Route::post('/profile-pic/',array('as'=>'profile-pic','uses'=>'UserController@ProfilePic'));

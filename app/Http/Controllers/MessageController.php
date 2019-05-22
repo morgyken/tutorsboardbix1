@@ -14,74 +14,124 @@ use Illuminate\Support\Facades\Input;
 
 class MessageController extends Controller
 {
+    
     private $messageid;
 
-public function PostMessages(Request $request, $question){
+    public function PostMessages(Request $request, $question){
 
-    $this->messageid = rand(99999,999999);
+        $this->messageid = rand(99999,999999);
 
-    DB::table('messages_models')->insert(
-        [      
-            'message' => $request->text,
-            'title' => $request->title,
-            'question_id' => $question,
-            'role' => 'Admin',
-            'messageid' => $this->messageid,            
-            'user' => Auth::guard('admin')->user()->id,            
-            'created_at' =>\Carbon\Carbon::now()->toDateTimeString(),
-            'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
-        ]);
+        dd($status);
 
-        //upload files 
+        if($request->title == 'answer')  // update question matrixes if the message is an answer
+        {
+            $status = 'answered'; 
 
-        $path = public_path().'/storage/uploads/'.$question.'/question/';
 
-        // auth file uploads 
 
-        $this->FileUploads($request, $path);
+            DB::table('question_matrices')->where('question_id', $question)
+                        ->update(
+                        [              
+                            'status' =>$status,
 
-        //return files details 
+                            'message' => $request->text,
 
-        return redirect('/admin/question_det/'.$question);
-    }
-     
-     
-    public function delete(Request $request){    
+                            'user_id' => Auth::user()->id, 
+                                                 
+                            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                        ]
+                    );        
+      
+                DB::table('question_history_tables')
+                    ->insert(
+                        [       
+                                                 
+                            'status' =>$status,
 
-        MessagesModel::where('id', $request->id) ->delete();   
-                   
-        return redirect()->route('question_det', ['question_id' =>$request->qid,]);    
-    }
+                            'question_id' => $question,
 
-    public function update(Request $request, $question){    
+                            'user_id' => Auth::user()->id,
 
-        $item = ItemModel::find($request->id); 
+                            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                        ]
+                    );
 
-        $item->message =$request->text;
+        }
+        else
+        {
+                DB::table('messages_models')->insert(
+                [      
+                    'message' => $request->text,
+
+                    'title' => $request->title,
+                    
+                    'question_id' => $question,
+                    
+                    'role' =>Auth::user()->role,
+                    
+                    'messageid' => $this->messageid,            
+                    
+                    'user' => Auth::user()->name,            
+                    
+                    'created_at' =>\Carbon\Carbon::now()->toDateTimeString(),
+                    
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                ]);
+
+               
+            }
+
+             //upload files 
+
+                $path = public_path().'/storage/uploads/'.$question.'/question/';
+
+                // auth file uploads 
+
+                $this->FileUploads($request, $path);
+
+                //return files details 
         
-        $item->save();
 
-        return redirect()->route('question_det', ['question_id' =>$request->qid,]);     
-    }
+            return redirect('/admin/question_det/'.$question);
+        }
+         
+         
+        public function delete(Request $request){    
 
-    public function FileUploads(Request $request, $path){
+            MessagesModel::where('id', $request->id) ->delete();   
+                       
+            return redirect()->route('question_det', ['question_id' =>$request->qid,]);    
+        }
 
-        /*
-         * The state of the school
-         */
+        public function update(Request $request, $question){    
 
-         $file = Input::file('file');
+            $item = ItemModel::find($request->id); 
 
-        $dest = $path;
+            $item->message =$request->text;
+            
+            $item->save();
 
-        foreach ($file as $files){
+            return redirect()->route('question_det', ['question_id' =>$request->qid,]);     
+        }
 
-            $name =  $files->getClientOriginalName();
+        public function FileUploads(Request $request, $path){
 
-            $files->move($dest, $name);
+            /*
+             * The state of the school
+             */
+
+             $file = Input::file('file');
+
+            $dest = $path;
+
+            foreach ($file as $files){
+
+                $name =  $files->getClientOriginalName();
+
+                $files->move($dest, $name);
 
             }
-      }
+        }
 
  
 

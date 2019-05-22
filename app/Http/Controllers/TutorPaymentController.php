@@ -8,75 +8,74 @@ use Session;
 use Illuminate\Http\Request;
 use Auth;
 
+use Carbon\Carbon;
+
 class TutorPaymentController extends Controller
 {
 
-
-    public function postPayments(Request $request)
+   public static function TutorNextPayment ()
     {
-    	$payment_id = rand(9999,999999);
-
-    	$user = Auth::user()->email;
-
-    	$order_array = json_decode($request->order_array);
-
-    	foreach ($order_array as $key => $value) {
-    		$payment_id1 = rand(9999,999999);
-    		# code...
-    		DB::table('tutor_payment')->where('order_id', $value)
-                  ->update(
-                [
-                    'tutor_id' 		=>$request->tutor_id,
-
-                    'payment_id'	=> $payment_id1,
-
-                    'status'		=> 'Paid',
-
-                    'paid_by'		=> $request->paidby,
-
-                    'amount'  =>$request->amount,
-
-                    'created_at' 	=>\Carbon\Carbon::now()->toDateTimeString(),
-                    'updated_at' 	=> \Carbon\Carbon::now()->toDateTimeString(),
-                ]);
-    	}
-
-                return redirect()->route('get-payment');
-    	}
-
-        public function tutorPayment ()
-        {
             // Check if it is Thurs
-            $tutor_payment = 0;
+           $today = new Carbon(); 
 
-            $today = new Carbon();
-        
-            // Select the total from the orders done upto 7 days ago
+           $date = \Carbon\Carbon::today()->subDays(8);   
 
-            // Select the total 
-            if($today->dayOfWeek == Carbon::THURSDAY)
-            {
+         //  dd($date);  
+    
 
             $tutor_payment = DB::table('question_details')
             
-            ->join('question_matrices', 'question_details.question_id', '=', 'question_matrices.question_id')
+           ->join('question_matrices', 'question_details.question_id', '=', 
 
-            ->where('question_matrices.status', '=','Rated')
+               'question_matrices.question_id')
 
-            ->where( 'updated_at', '>', Carbon::now()->subDays(8))
+            ->where('question_matrices.status', '=','answered')
 
-            ->where('question_matrices.tutor_id', '=', Auth:: User()->id)
+            ->where( 'question_matrices.updated_at', '>', $date )
+
+            ->where('question_matrices.user_id', '=', Auth:: User()->id)
+
+           // -> get();
 
             ->sum('question_details.tutor_price');
 
-            }
-
-            // post to database
+           //dd($tutor_payment);
 
 
-           //post the total on the Home page 
+            return $tutor_payment;
+            
+        }
+
+        public static function TutorTatalPayment ()
+    {
+            // Check if it is Thurs
+           $today = new Carbon(); 
+
+           $date = \Carbon\Carbon::today()->subDays(8);   
+
+         //  dd($date);  
+    
+
+            $tutor_payment = DB::table('question_details')
+            
+           ->join('question_matrices', 'question_details.question_id', '=', 
+
+               'question_matrices.question_id')
+
+            //->where('question_matrices.status', '=','answered')
+
+            ->where( 'question_matrices.updated_at', '>', $date )
+
+            ->where('question_matrices.user_id', '=', Auth:: User()->id)
+
+           // -> get();
+
+            ->sum('question_details.tutor_price');
+
+           //dd($tutor_payment);
 
 
-            //mark all of them as paid
+            return $tutor_payment;
+            
         }
     }

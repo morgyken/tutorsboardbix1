@@ -18,7 +18,7 @@ use App\Controllers\QuestionController;
 
 use Illuminate\Support\Facades\Auth;
 
-use Input;
+use Illuminate\Support\Facades\Input;
 
 class UserController extends Controller
 {
@@ -28,14 +28,10 @@ class UserController extends Controller
 
 
 
-  public function ProfilePicView($view){
+  public function ProfilePicView(){
 
-        if($view == 'profile'){
-            return view('auth.profile-pic');
-        }
-        else{
-            return view('auth.background-pic');
-        }
+        return view('general.profile-pic');
+      
   }
 
    public function FileUploads(Request $request, $path){
@@ -54,12 +50,11 @@ class UserController extends Controller
 
                 $name =  $files->getClientOriginalName();
 
-                $files->move($dest, $name);
-
+               $files->move($path, 'profile.jpg');
             }
       }
 
-  public function profilePic(){
+  public function profilePic(Request $request){
 
     $file = Input::file('profilepic');         
 
@@ -67,22 +62,19 @@ class UserController extends Controller
 
    // $path = public_path().'/uploads/profile/'.$user_id.'/';
 
-    $path = public_path().'/storage/uploads/profile/'.$user_id.'/';
+    $path = public_path().'/storage/profile/'.$user_id.'/';
 
    // $rules = array('file' => 'required|max:10000|mimes:png,jpg, jpeg,bmp' );
 
     //$validator = Validator::make(Input::all(), $rules);
 
-    if(is_array($file)){
+   // dd(Input::all());
 
-        foreach ($file as $files){
-            //$name =  $files->getClientOriginalName();
+     //upload files 
 
-             $files->move($path, 'profile-pic.jpg');
+    $this->FileUploads($request, $path);
 
-            }
-        }
-    return redirect()->back();
+    return redirect()->route('home');
     
     }
 
@@ -135,25 +127,5 @@ class UserController extends Controller
 
     }
 
-
-
-    public static function CustomerEmail($question, $database)
-    {
-        //use the qestion to get the data
-
-           $data = DB::table($database)->where('question_id', $question)->first();
-
-
-           if($data !=null)
-           {
-             $user = DB::table('users')->where('email', $data->user_id)->first();
-
-             return $user->email;
-           }
-           else
-           {
-            return '';
-           }
-
-         }
+   
     }

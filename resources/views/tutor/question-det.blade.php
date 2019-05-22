@@ -218,7 +218,7 @@
 
                                             <input type="radio" name="title" value="Student"> Student  
                                             <input type="radio" name="title" value="Admin"> Admin  
-                                            <input type="radio" name="title" value="Answer"> Answer 
+                                            <input type="radio" name="title" value="answer"> Answer 
                                 
                                             <input type="hidden" name="qid" value="{{$question->question_id}}">
                                         </div>
