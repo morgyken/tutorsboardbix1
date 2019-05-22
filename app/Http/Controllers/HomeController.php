@@ -50,13 +50,26 @@ class HomeController extends UserQuestionController
 
             ->paginate(10);
 
+          $tutorid = Auth::user()->id;
+
 
         $experience1 = new DateTimeController(); // to get the experience of the tutor
 
         $experience = $experience1->TimeDifference();
 
 
-         $NoOfQuestions = self::NoOfQuestions(Auth::user()->id);
+         $NoOfQuestions = self::NoOfQuestions($tutorid); // from UserQuestion Controller superclass
+
+         $CountTutorBids = self::CountTutorBids($tutorid); // from UserQuestion Controller superclass
+
+         $CountRevisions = self::CountRevisions($tutorid); // from UserQuestion Controller superclass
+
+
+          $CountRevisions = $this->CountRevisions();
+
+
+          $countComplete = $this->CountComplete();
+
 
        // dd(Auth::user());
         if(Auth::user()-> role == 'cust')
@@ -81,6 +94,12 @@ class HomeController extends UserQuestionController
               'experience' => $experience,
 
               'NoOfQuestions' => $NoOfQuestions,
+
+              'CountTutorBids' => $CountTutorBids,
+
+              'revisions' => $CountRevisions,
+
+              'complete' => $countComplete,
             ]
         );
     }

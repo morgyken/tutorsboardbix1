@@ -20,6 +20,13 @@ public function PostMessages(Request $request, $question){
 
     $this->messageid = rand(99999,999999);
 
+    //if title is the answer, then delete it from the revision table
+
+    if($request->title = 'Answer')
+    {
+       DB::table('revisions_table')->where('question_id', $question)->delete(); // assign questions 
+    }
+
     DB::table('messages_models')->insert(
         [      
             'message' => $request->text,

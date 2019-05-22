@@ -1,10 +1,10 @@
-
-
 <?php
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-class CreateTutorRevisionModelsTable extends Migration
+
+class CreateCompletedQuestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateTutorRevisionModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('revisions_table', function (Blueprint $table) {
+        Schema::create('completed_questions', function (Blueprint $table) {
             $table->increments('id');
-           $table->rememberToken();
-           $table->timestamps();
+            $table->rememberToken();
+            $table->timestamps();
             $table->string('tutor_id');
             $table->string('question_id');
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -28,6 +29,6 @@ class CreateTutorRevisionModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('revisions_table');
+        Schema::dropIfExists('completed_questions');
     }
 }

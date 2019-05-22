@@ -36,7 +36,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
-
 Route::post('messages/{questionid}',	['uses' => 'UserMessageController@PostMessages', 'as' =>'user-messages']);
 
 Route::post('bids/{question_id}/',
@@ -218,12 +217,14 @@ Route::post('post-payment',array(
 
 //Route::get('post-questions',array('as'=>'post-questions','uses'=>'QuestionController@postQuestions'));
 
-//sample post questions
 
+Route::post('/post-answer/{question_id}', ['as' =>'post.answer', 
 
-Route::post('/post-answer/{question_id}', ['as' =>'post.answer', 'uses' => 'QuestionController@PostAnswer']);
+	'uses' => 'QuestionController@PostAnswer']);
 
-Route::get('questions-answered',array('as'=>'questions-answered','uses'=>'AdminController@QuestionsAnswered'));
+Route::get('questions-answered',array('as'=>'questions-answered',
+
+	'uses'=>'AdminController@QuestionsAnswered'));
 
 /*
  * Post deadline and price using these two
@@ -231,9 +232,13 @@ Route::get('questions-answered',array('as'=>'questions-answered','uses'=>'AdminC
 
 //admin commwnts
 
-Route::post('/post-admin-comments/{question_id}', ['as'=> 'post-comments1', 'uses' => 'QuestionController@PostAdminComments']);
+Route::post('/post-admin-comments/{question_id}', ['as'=> 'post-comments1',
 
-Route::post('/post-comments/{question_id}', ['as'=> 'post-comments', 'uses' => 'QuestionController@PostComments']);
+ 'uses' => 'QuestionController@PostAdminComments']);
+
+Route::post('/post-comments/{question_id}', ['as'=> 'post-comments', 
+
+	'uses' => 'QuestionController@PostComments']);
 
 Route::post('/autocomplete', array('as' => 'autocomplete', 'uses'=>'SearchController@autocomplete'));
 

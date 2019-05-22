@@ -212,8 +212,12 @@ class UserQuestionController extends Controller
 
     }
 
+
+
      public static function NoOfQuestions($user_id)
     {
+
+
 
     $assigned = DB::table('assign_questions') ->where('tutor_id', Auth::user()->id)->get();
 
@@ -225,12 +229,13 @@ class UserQuestionController extends Controller
 
     public function NewQuestionDetails($question_id)
     {
+      $tutorid = Auth::user()->id;
 
       $user =  AdminModel::where('id', Auth::user()->id);
 
       $messages = MessagesModel::where('question_id', $question_id)->get();
 
-       $question =  DB::table('question_bodies')
+      $question =  DB::table('question_bodies')
             ->join('question_details', 'question_bodies.question_id', '=', 'question_details.question_id')
             ->join('question_matrices', 'question_details.question_id', '=', 'question_matrices.question_id')
 
@@ -238,13 +243,13 @@ class UserQuestionController extends Controller
 
             ->first();
 
-        $time = new DateTimeModel();
+      $time = new DateTimeModel();
 
         /*
         * return the comments in the following
         *
         */
-        $bids = DB::table('question_bids')
+      $bids = DB::table('question_bids')
                   ->select('bidpoints')->where('question_id', $question_id)
                   ->orderby('bidpoints')
                   ->get();
@@ -252,15 +257,15 @@ class UserQuestionController extends Controller
 
         //get the count of bids 
 
-        $bids =count ($bids);
+      $bids =count ($bids);
 
-        $interval = $time->getDeadlineInSeconds($question_id);
+      $interval = $time->getDeadlineInSeconds($question_id);
 
         //question files 
-        $path_question = public_path().'/storage/uploads/'.$question_id.'/question/';
+      $path_question = public_path().'/storage/uploads/'.$question_id.'/question/';
 
 
-        $filesInFolder = \File::files($path_question);
+      $filesInFolder = \File::files($path_question);
 
             foreach($filesInFolder as $path)
             {
@@ -269,22 +274,22 @@ class UserQuestionController extends Controller
 
         //Given the following 
 
-        $experience1 = new DateTimeController(); // to get the experience of the tutor
+      $experience1 = new DateTimeController(); // to get the experience of the tutor
 
-        $experience = $experience1->TimeDifference();
+      $experience = $experience1->TimeDifference();
 
-        $tutor= '';
+      $tutor= '';
 
-        $status =  DB::table('question_matrices')
+      $status =  DB::table('question_matrices')
                     ->select('status')
                     ->where('question_id', $question_id)
                     ->first();
 
-        if($status == null)
+      if($status == null)
         {
           $status = '';
         }
-        else 
+      else 
         {
 
         $status = $status->status;
@@ -292,14 +297,23 @@ class UserQuestionController extends Controller
 
         // Number of questions per tutor 
 
-        $NoOfQuestions = self::NoOfQuestions(Auth::user()->id);
+      $NoOfQuestions = self::NoOfQuestions($tutorid);
+
+      $CheckTutorBid = self::CheckTutorBid($question_id, $tutorid);
+
+      $CountTutorBids = self::CountTutorBids($tutorid);
+
+      $CountRevisions = $this->CountRevisions();
+
+      $countComplete = $this->CountComplete();
+
+     //dd($CountRevisions);
 
       if(Auth::check())
        {
                 return view ('tutor.question-det',
                   [
                     // class for html data
-
 
                     'class' =>  $user,
 
@@ -339,18 +353,90 @@ class UserQuestionController extends Controller
 
                     'NoOfQuestions' => $NoOfQuestions,
 
+                    //Number of bids placed 
+
+                    'CheckTutorBid' => $CheckTutorBid,
+
+                    //Count the number of bids 
+
+                    'CountTutorBids' => $CountTutorBids,
+
+                    //count revisions 
+
+                    'revisions' => $CountRevisions,
+
+                    'complete' => $countComplete,
+
 
                   ]);
 
        }
        else{
+
             return redirect()-> route('general');
       }
   }
 
-  public function CheckTutorBid(){
+
+  public static function CountRevisions(){
+    
+    $tutorid = Auth::user()->id;
+
+    //get tutor whose question is on revision
+
+    $rev = DB::table('revisions_table')-> where('tutor_id', $tutorid)->get();
+
+    if($rev == null ){
+
+      $rev = 0 ;
+    }    
+
+    return count($rev);
+  
+  }   
+
+   public static function CountComplete(){
+    
+    $tutorid = Auth::user()->id;
+
+    //get tutor whose question is on revision
+
+    $complete = DB::table('completed_questions')-> where('tutor_id', $tutorid)->get();
+
+    if($complete == null ){
+
+      $complete = 0 ;
+    }    
+
+    return count($complete);
+  
+  }    
+
+  public static function CheckTutorBid($question_id, $tutorid){
+
+    $bids = DB::table('question_bids')
+
+            ->where ('tutor_id', $tutorid)
+
+            ->where ('question_id', $question_id)
+
+            ->get();
+
+    return count($bids);
+  
+  }    
+
+    public static function CountTutorBids($tutorid){
+
+    $count = DB::table('question_bids')
+
+            ->where ('tutor_id', $tutorid)
+
+            ->get();
 
 
+    return count($count);
+  
   }    
 
     //bid points function

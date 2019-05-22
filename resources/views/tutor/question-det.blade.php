@@ -104,6 +104,11 @@
                                     </p>
                             @endforeach
 
+                            @if($CheckTutorBid == 1)
+                                <div class="col-md-8">
+                                    <p>  You have Placed a bid on this order </p>
+                                </div>
+                            @else
                             <div class="news_d_footer">
 
                                 @if($status != 'taken')
@@ -133,6 +138,8 @@
                                 @endif                             
                                
                             </div>  
+
+                            @endif                          
 
                                        
                         @if($status != 'taken')
@@ -200,7 +207,9 @@
 
                                     <h5>Post Answer/Leave a Comment</h5>
 
-                                    <form action="{{ route('user-messages', ['question' =>$question->question_id])}}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('user-messages', ['question' =>$question->question_id])}}" 
+
+                                        method="POST" enctype="multipart/form-data">
 
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                        

@@ -26,26 +26,26 @@
                                     <li>
                                         <a href="#" class="d-flex justify-content-between">
                                             <p>Assigned</p>
-                                            <p> {{ $NoOfQuestions }}</p>
+                                            <p> {{ $NoOfQuestions}}</p>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#" class="d-flex justify-content-between">
                                             <p> Bids</p>
-                                            <p>6</p>
+                                            <p> {{ $CountTutorBids}}</p>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#" class="d-flex justify-content-between">
                                             <p>For Revision</p>
-                                            <p>4</p>
+                                            <p> {{$revisions}}</p>
                                         </a>
                                     </li>                                    
                                     
                                     <li>
                                         <a href="#" class="d-flex justify-content-between">
                                             <p>Completed</p>
-                                            <p>8</p>
+                                            <p> {{$complete}}</p>
                                         </a>
                                     </li>                                  
                                                                                                             
