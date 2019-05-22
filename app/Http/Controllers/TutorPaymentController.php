@@ -51,9 +51,7 @@ class TutorPaymentController extends Controller
             // Check if it is Thurs
            $today = new Carbon(); 
 
-           $date = \Carbon\Carbon::today()->subDays(8);   
-
-         //  dd($date);  
+           $date = \Carbon\Carbon::today()->subDays(8);           
     
 
             $tutor_payment = DB::table('question_details')
@@ -62,18 +60,17 @@ class TutorPaymentController extends Controller
 
                'question_matrices.question_id')
 
-            //->where('question_matrices.status', '=','answered')
+            //->where('question_matrices.status', '=','assigned')
+
+            //->orWhere('question_matrices.status', '=','revision')
 
             ->where( 'question_matrices.updated_at', '>', $date )
 
-            ->where('question_matrices.user_id', '=', Auth:: User()->id)
+            ->where('question_matrices.user_id', Auth::User()->id)
 
            // -> get();
 
             ->sum('question_details.tutor_price');
-
-           //dd($tutor_payment);
-
 
             return $tutor_payment;
             

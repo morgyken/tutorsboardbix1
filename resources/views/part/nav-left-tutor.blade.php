@@ -26,7 +26,7 @@
                                 </div>
                                
                                 <div class="br"></div>
-                                <h4> Ksh. {{ $total }}/569 </h4>
+                                <h4> Ksh. {{ $total }}/ {{ $total2}} </h4>
 
                                 <div class="br"></div>
                             </aside>
