@@ -36,7 +36,7 @@
                                 <h4 class="widget_title">Tutor Menu</h4>
                                 <ul class="list cat-list">
                                     <li>
-                                        <a href="#" class="d-flex justify-content-between">
+                                        <a href=" {{ route('home', ['params' => 'taken']) }}" class="d-flex justify-content-between">
                                             <p>Assigned</p>
                                             <p> {{ $NoOfQuestions}}</p>
                                         </a>
@@ -48,14 +48,14 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" class="d-flex justify-content-between">
+                                        <a href="{{ route('home', ['params' => 'revision']) }}" class="d-flex justify-content-between">
                                             <p>For Revision</p>
                                             <p> {{$revisions}}</p>
                                         </a>
                                     </li>                                    
                                     
                                     <li>
-                                        <a href="#" class="d-flex justify-content-between">
+                                        <a href="{{ route('home', ['params' => 'answered']) }}" class="d-flex justify-content-between">
                                             <p>Completed</p>
                                             <p> {{$complete}}</p>
                                         </a>

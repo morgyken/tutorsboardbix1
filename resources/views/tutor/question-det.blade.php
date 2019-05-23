@@ -69,18 +69,9 @@
                                     
                                 </div>
                         
-                                <div class="float-right" style="margin-top:30px;">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <h5>Tutor Morgyken </h5>
-                                            <p>12 Dec, 2017 11:21 am</p>
-                                        </div>
-                                        <div class="d-flex">
-                                            <img src="{{ URL::asset('opium/img/blog/user-img.jpg ')}}" alt="">
-                                        </div>
-                                    </div>
-                                </div>
+                            
                             </div>
+                              <div class="user_details">
 
                      
                             {!! htmlspecialchars_decode($question-> question_body) !!}
@@ -103,6 +94,7 @@
                                     <i class="icon-download-alt">{{$file['basename'] }} </i></a>   
                                     </p>
                             @endforeach
+                        </div>
 
 
                             @if($CheckTutorBid == 1)

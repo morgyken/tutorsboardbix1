@@ -217,9 +217,10 @@ class UserQuestionController extends Controller
      public static function NoOfQuestions($user_id)
     {
 
-
-
-    $assigned = DB::table('assign_questions') ->where('tutor_id', Auth::user()->id)->get();
+   $assigned = DB::table('question_matrices')
+    ->where('user_id', Auth::user()->id)
+    ->where('status','taken')
+    ->get();
 
     $NoOfQuestions = count($assigned);
 
@@ -401,7 +402,10 @@ class UserQuestionController extends Controller
 
     //get tutor whose question is on revision
 
-    $complete = DB::table('completed_questions')-> where('tutor_id', $tutorid)->get();
+    $complete = DB::table('question_matrices')
+    -> where('user_id', $tutorid)
+    -> where('status', 'answered')
+    ->get();
 
     if($complete == null ){
 

@@ -10,6 +10,8 @@ use Auth;
 
 use App\MessagesModel;
 
+use Illuminate\Support\Facades\Validator;
+
 use Illuminate\Support\Facades\Input;
 
 class UserMessageController extends Controller
@@ -17,6 +19,21 @@ class UserMessageController extends Controller
     private $messageid;
 
 public function PostMessages(Request $request, $question){
+
+    //perform validation 
+
+    $v = Validator::make($request->all(), [
+
+        'title' => 'required',
+
+        'text' => 'required|min:20|max:1000',
+
+    ]);
+
+    if ($v->fails())
+    {
+        return redirect()->back()->withErrors($v->errors());
+    }
 
     $this->messageid = rand(99999,999999);
 

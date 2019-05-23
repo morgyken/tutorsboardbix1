@@ -26,8 +26,30 @@ class HomeController extends UserQuestionController
      */
   
  
-    public function index()
+    public function index($params = null)
     {
+
+      //dd($params);
+
+      if($params != null)
+      {
+        $question=  DB::table('question_bodies')
+
+            ->join('question_details', 'question_bodies.question_id', '=', 'question_details.question_id')
+            
+            ->join('question_matrices', 'question_details.question_id', '=', 'question_matrices.question_id')
+
+            ->where('question_matrices.status', $params)
+
+            ->where('question_matrices.user_id', Auth::user()->id)
+
+            ->orderBy('question_details.question_deadline', 'desc')
+
+            ->paginate(10);
+
+      }
+      else
+      {
         $question=  DB::table('question_bodies')
 
             ->join('question_details', 'question_bodies.question_id', '=', 'question_details.question_id')
@@ -35,9 +57,17 @@ class HomeController extends UserQuestionController
 
             ->where('question_matrices.status', 'new')
 
+            ->where('question_matrices.user_id', Auth::user()->id)
+
             ->orderBy('question_details.question_deadline', 'desc')
 
             ->paginate(10);
+
+      }
+        
+
+
+
 
             $question_cust=  DB::table('question_bodies')
 

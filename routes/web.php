@@ -30,7 +30,7 @@ Route::any('/question_det/{question_id}', [ 'as'=>'user-question_det', 'uses'=>'
 Route::any('/cust-question-det/{question_id}', [ 'as'=>'cust-question-det', 'uses'=>'StudentQuestionController@NewQuestionDetails'] );
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/{params?}', 'HomeController@index')->name('home');
 
 //Route::get('/student-home', 'StudentHomeController@index')->name('cust.home');
 
@@ -340,7 +340,7 @@ Route::post('tut-account',
 //post tutor profile
 
 Route::post('tut-education',
-	
+
 	array('as'=>'tut-education','uses'=>'TutorProfileController@postTutEducation'));
 
 //get all tutors

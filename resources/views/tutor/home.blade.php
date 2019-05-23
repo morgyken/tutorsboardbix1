@@ -65,18 +65,7 @@
     }
     ?>
 
-    <div class="clearfix">
-        <div class="col-md-10">
-            <h4>Question Detail  </h4>
-        </div>
-        <div class="col-md-2">
-            <h4> Other Details</h4>
-        </div>
-
-    </div>
-<hr>
-
-
+    
 </script>
         
         <!--================Blog Area =================-->
