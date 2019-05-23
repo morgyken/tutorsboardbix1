@@ -28,7 +28,18 @@ public function PostMessages(Request $request, $question){
     if($request->title == 'answer')
     {
 
-       DB::table('revisions_table')->where('question_id', $question)->delete(); // assign questions 
+
+    $file = Input::file('file');
+    
+ //   dd($file);
+
+    if ($file == null )
+    {
+        return redirect()-> back()->withErrors(['msg', 'You must attach the answer, try again']);;
+    }
+
+    
+    DB::table('revisions_table')->where('question_id', $question)->delete(); // assign questions 
 
     $status = 'answered'; 
 
@@ -125,18 +136,17 @@ public function PostMessages(Request $request, $question){
          {
             return; 
          }
-         
          else
          {
-            $dest = $path;
+        $dest = $path;
 
-            foreach ($file as $files){
+        foreach ($file as $files){
 
-                $name =  $files->getClientOriginalName();
+            $name =  $files->getClientOriginalName();
 
-                $files->move($dest, $name);
+            $files->move($dest, $name);
 
-                }
+            }
 
          }
 

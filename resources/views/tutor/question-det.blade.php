@@ -85,7 +85,7 @@
                      
                             {!! htmlspecialchars_decode($question-> question_body) !!}
 
-                   
+                                
                              
 
                             <div class="news_d_footer">                               
@@ -103,6 +103,7 @@
                                     <i class="icon-download-alt">{{$file['basename'] }} </i></a>   
                                     </p>
                             @endforeach
+
 
                             @if($CheckTutorBid == 1)
                                 <div class="col-md-8">
