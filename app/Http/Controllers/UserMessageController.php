@@ -20,14 +20,17 @@ public function PostMessages(Request $request, $question){
 
     $this->messageid = rand(99999,999999);
 
+
+  // dd($request->title);
+
     //if title is the answer, then delete it from the revision table
 
-    if($request->title = 'Answer')
+    if($request->title == 'answer')
     {
 
        DB::table('revisions_table')->where('question_id', $question)->delete(); // assign questions 
 
-       $status = 'answered'; 
+    $status = 'answered'; 
 
 
 
@@ -56,9 +59,9 @@ public function PostMessages(Request $request, $question){
                 ]
             );
     }
-    else
-    {
-        DB::table('messages_models')->insert(
+
+
+    DB::table('messages_models')->insert(
                 [      
                     'message' => $request->text,
 
@@ -77,7 +80,7 @@ public function PostMessages(Request $request, $question){
                     'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
                 ]);
 
-    }
+    
 
         //upload files 
 
@@ -118,16 +121,26 @@ public function PostMessages(Request $request, $question){
          */
 
          $file = Input::file('file');
+         if($file == null)
+         {
+            return; 
+         }
+         
+         else
+         {
+            $dest = $path;
 
-        $dest = $path;
+            foreach ($file as $files){
 
-        foreach ($file as $files){
+                $name =  $files->getClientOriginalName();
 
-            $name =  $files->getClientOriginalName();
+                $files->move($dest, $name);
 
-            $files->move($dest, $name);
+                }
 
-            }
+         }
+
+       
       }
 
  

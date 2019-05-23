@@ -68,9 +68,11 @@ class TutorPaymentController extends Controller
 
             ->where('question_matrices.user_id', Auth::User()->id)
 
-           // -> get();
+            //-> get();
 
             ->sum('question_details.tutor_price');
+
+            //dd($tutor_payment);
 
             return $tutor_payment;
             

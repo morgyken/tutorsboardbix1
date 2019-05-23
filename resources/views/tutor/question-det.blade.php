@@ -111,7 +111,9 @@
                             @else
                             <div class="news_d_footer">
 
-                                @if($status != 'taken')
+
+                                @if($status == 'new') 
+
                             
                                 <div class="col-md-6">
                                     <button class="btn btn-warning btn-rounded mb-4"  data-toggle="modal" data-target="#modal-take"> Take Order</button>
@@ -134,30 +136,26 @@
                                  <div class="col-md-4" style="text-align: right;">
                                     <button class="btn btn-warning btn-rounded mb-4"  data-toggle="modal" data-target="#modal-optout">Opt out</button>
                                 </div> 
-
-                                @endif                             
+                                  @endif  
+                            
                                
                             </div>  
 
                             @endif                          
 
                                        
-                        @if($status != 'taken')
+                        @if($status == 'new')
                             <div class="news_d_footer">                               
                                <h5> The Order is Still available </h5>
                             </div>
-                        @else
 
-                            @if(Auth::user()->role != 'tutor')
-                                <div class="news_d_footer">                               
-                                   <h5> The Order has been assigned to {{$tutor}} </h5>
-                                </div>
-                            @else
+                          @elseif($status == 'taken' || $status == 'revision' || $status == 'answered' && $tutor == Auth::user()->name)
                                 <div class="news_d_footer">                               
                                <h5> Conversation History </h5>
                                 </div>
 
                                 <div class="comments-area">
+
                                     @foreach($messages as $comm)
                             
                                     <div class="comment-list">
@@ -239,7 +237,7 @@
                                         <button class="primary-btn submit_btn">Post Answer or Comment</button>
                                     </form>
                                 </div>
-                                @endif
+                                
                         @endif
                     </div>
                 </div>
