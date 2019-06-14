@@ -85,7 +85,7 @@
         <!--================Header Menu Area =================-->
         <header class="header_area">
 			<div class="main_menu">
-				@include('part.nav-gen')
+				@include('part.nav-cust')
 			</div>
 			
         </header>

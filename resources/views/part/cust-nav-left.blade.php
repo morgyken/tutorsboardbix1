@@ -13,11 +13,10 @@
                                     <a href="#"><i class="fa fa-behance"></i></a>
                                 </div>
                                 <div class="br"></div>
-                                <h4> Success rate 10/10 </h4>
+                                <h4> Success rate:  </h4>
 
                                 <div class="br"></div>
-                            </aside>
-                            
+                            </aside>                           
                      
                         </div>
                     </div>

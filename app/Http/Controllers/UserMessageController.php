@@ -13,6 +13,7 @@ use App\MessagesModel;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Input;
+use App\QuestionMatrix;
 
 class UserMessageController extends Controller
 {
@@ -60,14 +61,14 @@ public function PostMessages(Request $request, $question){
 
     $status = 'answered'; 
 
-
+    
 
     DB::table('question_matrices')->where('question_id', $question)
                 ->update(
                 [              
                     'status' =>$status,        
 
-                    'user_id' => Auth::user()->id, 
+                    'tutor' => Auth::user()->id, 
                                          
                     'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                 ]
@@ -122,7 +123,24 @@ public function PostMessages(Request $request, $question){
 
         return redirect('/question_det/'.$question);
     }
-     
+
+    //customer feedback 
+    
+    public function StudentResponse(Request $request, $question){ 
+
+        DB::table('question_matrices')->where('question_id', $question)
+                ->update(
+                [              
+                    'status' =>$request->update,        
+
+                    'tutor' => Auth::user()->id, 
+                                         
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                ]
+            );    
+
+        return redirect()->route('question_det', ['question_id' =>$question,]);     
+    }
      
     public function delete(Request $request){    
 

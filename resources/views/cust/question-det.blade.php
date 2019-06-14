@@ -211,18 +211,21 @@
                                 </div>
                                 <div class="comment-form" style="background:#30593d; padding: 10px; border-radius: 5px">
 
-                                <form action="{{ route('user-messages', ['question' =>$question->question_id])}}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('student-res', ['question' =>$question->question_id])}}" method="POST">
 
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         
-                                        <div class="form-group">
-
-
-                                            <input type="radio" class="col-md-6" name="title" value="Tutor"> Mark as Complete 
-                                            <input type="radio"  class="col-md-6" name="title" value="Admin"> Recomend revision                                                                    
+                                        <div class="form-group clearfix">
+                                        <div class="col-md-4 form-group">
+                                        <input type="radio"  name="update" value="Complete"> Mark as Complete 
+                                         </div>
+                                         <div class="col-md-4 form-group" >
+                                            <input type="radio"  name="update" value="revision"> Recomend revision 
+                                         </div>                                           
+                                                                                                            
                                         </div>
                                     
-                                        <button class="btn btn-warning btn-block" type="submit">Mark as complete</button>
+                                        <button class="btn btn-warning btn-block" type="submit">Continue</button>
                                 </form>
                             </div>
                                                    

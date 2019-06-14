@@ -38,6 +38,9 @@ Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logou
 
 Route::post('messages/{questionid}',	['uses' => 'UserMessageController@PostMessages', 'as' =>'user-messages']);
 
+Route::post('student-res/{questionid}',	['uses' => 'UserMessageController@StudentResponse', 'as' =>'student-res']);
+
+
 Route::post('bids/{question_id}/',
 
 	[ 'as'=>'post-bids', 'uses'=>'QuestionBidsController@PostNewBids']);

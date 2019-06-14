@@ -10,10 +10,10 @@
 						<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 							<ul class="nav navbar-nav menu_nav">
-								<li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li> 
-								<li class="nav-item"><a class="nav-link" href="category.html">Ask Questions</a></li>
+								<li class="nav-item active"><a class="nav-link" href="{{route('home')}}">Home</a></li> 
+								<li class="nav-item"><a class="nav-link" href="{{ URL::to('/') }}">Ask Questions</a></li>
 								 
-								<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+								<li class="nav-item"><a class="nav-link" href="contact.html">Contac t</a></li>
 							</ul>
 							<ul class="nav navbar-nav navbar-right header_social ml-auto">
 								<li class="nav-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -35,7 +35,7 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ Auth::user()->name }}</a>
                         </li>
                          <li class="nav-item">
-                                     <a class="nav-link" href="{{ route('admin.logout') }}"
+                                     <a class="nav-link" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}

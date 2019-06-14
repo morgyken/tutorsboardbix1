@@ -208,7 +208,7 @@ public function AssignQuestion (Request $request, $question, $tutor=null)
                     [                                             
                         'status' =>$status,
 
-                        'user_id' => Auth::user()->id, 
+                        'tutor' => Auth::user()->id, 
                                              
                         'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                     ]

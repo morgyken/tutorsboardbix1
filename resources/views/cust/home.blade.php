@@ -86,7 +86,7 @@
                                <a href="#" class="btn btn-secondary btn-lg btn-rounded mb-4" data-toggle="modal" data-target="#frameModalBottom"><h3>Ask Question Now! </h3></a>
                             </article>
                           
-                            <article class="blog_style1";">
+                             <article class="blog_style1 claerfix";">
                                 
                                 <div class="blog_text">
                                     <div class="blog_text_inner">
@@ -95,6 +95,7 @@
                                         <div class="card-header">
                                             Available Questions
                                         </div>
+                                        <?php    $counter =1 ; ?>
 
                                          
                                           @foreach($question as $value)
@@ -103,20 +104,42 @@
 
                                                 $deadline12 = getDeadlineInSeconds12($value->question_deadline);
 
+                                              
+
                                                 ?>  
+                                      
 
                                             <ul class="list-group list-group-flush clearfix">
                                                 <li class="list-group-item" >
                                                     <div class="row"> 
+                                                          <div class="col-md-1">
+
+                                                            {{ $counter}}
+                                                            <?php
+                                                            $counter++;                                                             
+
+                                                            ?>
+                                                          </div>
                                                         <div class="col-md-2">
                                                        <a href="{{route('cust-question-det', ['question_id' => $value->question_id])}}"> {{ $value->question_id }} </a>
+                                                       <p class="badge badge-warning" >  {{$value->status }}  
+                                                        @if($value->paid ==1 )
+                                                                Paid 
+                                                       @else
+                                                        Not Paid 
+                                                       @endif
+                                                       </p>
+                                                      
                                                         </div> 
 
-                                                         <div class="col-md-8" style="text-align: left;font-size:92%;"">
-                                                            <p>Full FeaturedThis is the full featured Froala WYSIWYG HTML editor.Full FeaturedThis is the full featured Froala WYSIWYG HTML editor. Full FeaturedThis is the full featured Froala WYSIWYG HTML editor.  </p> 
+                                                         <div class="col-md-7" style="text-align: left;font-size:92%;">
+                                                            <p> 
+                                                                <?php echo strip_tags(html_entity_decode($value->order_summary)); ?>
+
+                                                            </p> 
                                                         </div> 
-                                                         <div class="col-md-2">
-                                                           <span class="badge badge-info">Ksh. {{$value->tutor_price * 94}}</span>
+                                                         <div class="col-md-2" style="font-size: 75%; padding: .1em; ">
+                                                           <span class="badge badge-info ">Ksh. {{$value->tutor_price * 94}}</span>
                                                              <span class="badge badge-warning" style="    font-size:75%;">{{ $array_of_deadline }}</span>
                                                         </div>
                                                     </div>

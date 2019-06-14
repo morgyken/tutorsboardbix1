@@ -11,6 +11,8 @@ use Auth;
 
 use Session;
 
+use DB;
+
 class PaypalPayments extends Controller
 {
 	//https://github.com/srmklive/laravel-paypal
@@ -89,6 +91,18 @@ class PaypalPayments extends Controller
 		$response = $provider->getTransactionDetails($token);
 
 		$qID = \Session::get('question_id');
+
+		//update payments on database 
+
+		//dd(session()->all());
+
+		DB::table('question_matrices')->where('question_id', Session::get('question_id') )
+		->update(
+			[
+				'paid' => 1,
+				'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+			]
+		);
 
 
 		return redirect()->route('home');
