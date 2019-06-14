@@ -29,9 +29,13 @@ class QuestionBidsController extends Controller
     $tutor_id = Auth::user()->id;
 
     $checkbid = DB::table('question_bids')
+
                     ->select('tutor_id')
+
                     ->where('tutor_id', $tutor_id)
+
                     ->where('question_id', $question_id)
+
                     ->first();
 
     if($checkbid  == null)
@@ -44,6 +48,7 @@ class QuestionBidsController extends Controller
                 'bidpoints' => $this->CalculatePoints(), //calculate bidpoints
 
                 'tutor_id' =>Auth::user()->id,
+
                 'question_id' =>$question_id,
 
                // 'question_deadline' =>$request->question_deadline,
@@ -51,6 +56,7 @@ class QuestionBidsController extends Controller
                 'bid_price' =>$request->bid_price,
 
                 'created_at' =>\Carbon\Carbon::now()->toDateTimeString(),
+                
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
             ]);
 

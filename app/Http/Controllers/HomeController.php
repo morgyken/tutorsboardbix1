@@ -29,8 +29,6 @@ class HomeController extends UserQuestionController
     public function index($params = null)
     {
 
-      //dd($params);
-
       if($params != null)
       {
         $question=  DB::table('question_bodies')
@@ -45,7 +43,7 @@ class HomeController extends UserQuestionController
 
             ->orderBy('question_details.question_deadline', 'desc')
 
-            ->paginate(10);
+            ->paginate(25);
 
       }
       else
@@ -57,43 +55,39 @@ class HomeController extends UserQuestionController
 
             ->where('question_matrices.status', 'new')
 
-            ->where('question_matrices.user_id', Auth::user()->id)
+            //->where('question_matrices.user_id', Auth::user()->id)
 
             ->orderBy('question_details.question_deadline', 'desc')
 
-            ->paginate(10);
+            ->paginate(25);
 
       }
         
-
-
-
-
             $question_cust=  DB::table('question_bodies')
 
             ->join('question_details', 'question_bodies.question_id', '=', 'question_details.question_id')
+
             ->join('question_matrices', 'question_details.question_id', '=', 'question_matrices.question_id')
 
             ->where('question_matrices.user_id', Auth::user()->id)
 
             ->orderBy('question_details.question_deadline', 'desc')
 
-            ->paginate(10);
+            ->paginate(25);
 
           $tutorid = Auth::user()->id;
 
 
-        $experience1 = new DateTimeController(); // to get the experience of the tutor
+          $experience1 = new DateTimeController(); // to get the experience of the tutor
 
-        $experience = $experience1->TimeDifference();
+          $experience = $experience1->TimeDifference();
 
 
-         $NoOfQuestions = self::NoOfQuestions($tutorid); // from UserQuestion Controller superclass
+          $NoOfQuestions = self::NoOfQuestions($tutorid); // from UserQuestion Controller superclass
 
-         $CountTutorBids = self::CountTutorBids($tutorid); // from UserQuestion Controller superclass
+          $CountTutorBids = self::CountTutorBids($tutorid); // from UserQuestion Controller superclass
 
-         $CountRevisions = self::CountRevisions($tutorid); // from UserQuestion Controller superclass
-
+          $CountRevisions = self::CountRevisions($tutorid); // from UserQuestion Controller superclass
 
           $CountRevisions = $this->CountRevisions();
 
@@ -101,16 +95,27 @@ class HomeController extends UserQuestionController
           $countComplete = $this->CountComplete();
 
 
+          $NoOfAvailable =  $this->NoOfAvailable();
+
        // dd(Auth::user());
         if(Auth::user()-> role == 'cust')
         {
           return view('cust.home', 
             [
-                'question' => $question_cust, 
+              'question' => $question_cust, 
 
-                'experience' => $experience,
+              'experience' => $experience,
 
-                'NoOfQuestions' => $NoOfQuestions,
+              'NoOfQuestions' => $NoOfQuestions,
+      
+
+              'CountTutorBids' => $CountTutorBids,
+
+              'revisions' => $CountRevisions,
+
+              'complete' => $countComplete,
+              
+              'NoOfAvailable' => $NoOfAvailable
 
             ]
         );
@@ -130,6 +135,9 @@ class HomeController extends UserQuestionController
               'revisions' => $CountRevisions,
 
               'complete' => $countComplete,
+              
+              'NoOfAvailable' => $NoOfAvailable
+--
             ]
         );
     }

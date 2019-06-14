@@ -10,13 +10,15 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 			<ul class="nav navbar-nav menu_nav">
-				<li class="nav-item active"><a class="nav-link" href="{{ URL::to('/') }}">Home</a></li> 
+				<li class="nav-item active"><a class="nav-link" href="{{ URL::to('/') }}">Home</a></li>
+                <li class="nav-item active"><a class="nav-link" href="{{ URL::to('/') }}">How it works</a></li>
+                @if(Auth()->check()) 
 				<li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Available Jobs</a></li>
 				<li class="nav-item"><a class="nav-link" href="{{ route('home', ['params' =>'taken']) }}">Assigned </a></li>
 					<li class="nav-item"><a class="nav-link" href="{{ route('home', ['params' => 'revision']) }}"> Revision </a></li>
 				<li class="nav-item"><a class="nav-link" href="{{ route('home', ['params' => 'answered']) }}">Completed</a></li>
 				
-				
+				@endif
 			</ul>
 			<ul class="nav navbar-nav navbar-right header_social ml-auto">
 				<li class="nav-item"><a class="nav-link"  href="#">Contact: +9183473422</a></li>

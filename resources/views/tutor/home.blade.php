@@ -69,7 +69,7 @@
 </script>
         
         <!--================Blog Area =================-->
-        <section class="blog_area p_120">
+        <section class="blog_area p_120 single-post-area">
             <div class="container">
                 <div class="row">   
                 <hr class="type_1">  
@@ -77,18 +77,16 @@
                     @include('part.nav-left-tutor')
 
                       <div class="col-lg-9">
-                        <div class="blog_left_sidebar">
+                        <div class="card">
+                            <div class="card-body">           
                             <article class="blog_style1"; style="text-align: center; ">
                                 
                                 <a class="logo" href="#"><img src="{{ URL::asset('opium/img/logo.png ')}}" alt=""></a>
                             </article>
-
-                             <article class="blog_style1"; style="text-align: center;">
-                               
-                                <h4>Welcome Tutor </h4>
-                            </article>
+                            <hr>
+                            
                           
-                            <article class="blog_style1";">
+                            <article class="blog_style1 claerfix";">
                                 
                                 <div class="blog_text">
                                     <div class="blog_text_inner">
@@ -97,6 +95,7 @@
                                         <div class="card-header">
                                             Available Questions
                                         </div>
+                                        <?php    $counter =1 ; ?>
 
                                          
                                           @foreach($question as $value)
@@ -105,20 +104,34 @@
 
                                                 $deadline12 = getDeadlineInSeconds12($value->question_deadline);
 
+                                              
+
                                                 ?>  
+                                      
 
                                             <ul class="list-group list-group-flush clearfix">
                                                 <li class="list-group-item" >
                                                     <div class="row"> 
+                                                          <div class="col-md-1">
+
+                                                            {{ $counter}}
+                                                            <?php
+                                                            $counter++;                                                             
+
+                                                            ?>
+                                                          </div>
                                                         <div class="col-md-2">
                                                        <a href="{{route('user-question_det', ['question_id' => $value->question_id])}}"> {{ $value->question_id }} </a>
                                                         </div> 
 
-                                                         <div class="col-md-8" style="text-align: left;font-size:92%;"">
-                                                            <p>Full FeaturedThis is the full featured Froala WYSIWYG HTML editor.Full FeaturedThis is the full featured Froala WYSIWYG HTML editor. Full FeaturedThis is the full featured Froala WYSIWYG HTML editor.  </p> 
+                                                         <div class="col-md-7" style="text-align: left;font-size:92%;">
+                                                            <p> 
+                                                                <?php echo strip_tags(html_entity_decode($value->order_summary)); ?>
+
+                                                            </p> 
                                                         </div> 
-                                                         <div class="col-md-2">
-                                                           <span class="badge badge-info">Ksh. {{$value->tutor_price * 94}}</span>
+                                                         <div class="col-md-2" style="font-size: 75%; padding: .1em; ">
+                                                           <span class="badge badge-info ">Ksh. {{$value->tutor_price * 94}}</span>
                                                              <span class="badge badge-warning" style="    font-size:75%;">{{ $array_of_deadline }}</span>
                                                         </div>
                                                     </div>

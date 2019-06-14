@@ -38,7 +38,7 @@
                                         </div>
                                     </div>
                             <hr>
-                            <h4> {{ ($question->summary) }} </h4>
+                            <h4>  <?php echo strip_tags(html_entity_decode($question->summary)); ?> </h4>
                             <div class="user_details">
                                 <div class="float-left">
                                     <div class="card">
@@ -164,8 +164,7 @@
                                                     <p class="comment">
                                                        {{ $comm->message }}
                                                     </p>
-                                                </div> 
-                                               
+                                                </div>                                               
 
                                             </div>                                    
                                         </div>
@@ -188,8 +187,7 @@
                                             </p>
                                         @endforeach 
                                     </div>       
-                                  
-                            
+                                                           
                                     @endforeach  
                                     
                                     </div>                                                              

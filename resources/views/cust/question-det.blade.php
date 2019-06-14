@@ -96,14 +96,23 @@
                                     </p>
                             @endforeach
 
-                                                                   
-                        @if($status != 'taken')
+                                   
+                        @if($status ==='new')
                             <div class="news_d_footer" style="background:yellow">                               
                                <h5> The Order is Still available </h5>
                             </div>
+                        @elseif($status === 'answered')
+                            <div class="news_d_footer" style="background:green; color:#fff">                               
+                               <h5> Your Answer is available! </h5>
+                            </div>
+                        @elseif($status === 'revision')
+                            <div class="news_d_footer" style="background:#e88651; color:#fff">                               
+                               <h5> Your Answer is available! </h5>
+                            </div>
                         @else
+                       
                             <div class="news_d_footer" style="background: #88b0ef; color: white">                               
-                               <h5> The Order has been assigned to {{$tutor->name}} </h5>
+                               <h5> The Order has been assigned to {{$tutor}} </h5>
                     
                             </div>
                         @endif            

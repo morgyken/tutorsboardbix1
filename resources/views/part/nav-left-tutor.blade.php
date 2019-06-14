@@ -37,6 +37,12 @@
                                 <ul class="list cat-list">
                                     <li>
                                         <a href=" {{ route('home', ['params' => 'taken']) }}" class="d-flex justify-content-between">
+                                            <p>Available</p>
+                                            <p> {{ $NoOfAvailable}}</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href=" {{ route('home', ['params' => 'taken']) }}" class="d-flex justify-content-between">
                                             <p>Assigned</p>
                                             <p> {{ $NoOfQuestions}}</p>
                                         </a>

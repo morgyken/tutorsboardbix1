@@ -242,8 +242,6 @@ class StudentQuestionController extends Controller
                   ->select('bidpoints')->where('question_id', $question_id)
                   ->orderby('bidpoints')
                   ->get();
-
-
         //get the count of bids 
 
         $bids =count ($bids);
@@ -265,13 +263,10 @@ class StudentQuestionController extends Controller
 
         $tutor= '';
 
-
         $status =  DB::table('question_matrices')
                     ->select('status')
                     ->where('question_id', $question_id)
                     ->first();
-
-
         if($status == null)
         {
           $status = '';
@@ -322,7 +317,6 @@ class StudentQuestionController extends Controller
                     //'commfiles' => $comm_files
 
                     'cust' => $customer->name,
-
 
                   ]);
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQuestionMatricesTable extends Migration
+class CreateNamesModelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateQuestionMatricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('question_matrices', function (Blueprint $table) {
+        Schema::create('names_models', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->string('year');
+            $table->string('name');
+            $table->string('percent');
+            $table->string('sex');
             $table->rememberToken();
-            $table->integer('question_id')->unique();
-            $table->integer('user_id')->nullable();          
-            $table->string('status')->default('');
-	    $table->string('tutor');
-                      
         });
     }
 
@@ -32,6 +31,6 @@ class CreateQuestionMatricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('question_matrices');
+        Schema::dropIfExists('names_models');
     }
 }

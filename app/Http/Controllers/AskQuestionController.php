@@ -37,10 +37,6 @@ class AskQuestionController extends Controller
         $this->middleware('QuestionOverdue');
     }
 
-   
-
-//Make payments 
-
      public function GetMakePayments(){
         $user =  User::where('email', Auth::user()->email) ->first();
             
@@ -54,16 +50,15 @@ class AskQuestionController extends Controller
     public function postQuestion(Request $request)
     {
         $question_id = rand (99999,999999); 
-        
+      
+        $number_of_words = rand (180,230);
 
-        $number_of_words = rand (120,150);
+        $number_of_words1 = rand (130,150);
+      
+        $summary =  strip_tags(substr($request->question_body,0, $number_of_words)). '...';
 
-        $summary =  strip_tags(substr($request->question_body,0, $number_of_words));
+        $summary1 =  strip_tags(substr($request->question_body,0, $number_of_words1)). '...';
 
-        /*
-         *
-         * file picker starts here
-         */
 
         $file = Input::file('file');
 
@@ -95,7 +90,7 @@ class AskQuestionController extends Controller
                 'user_id'   => Auth::guard('admin')->user()->id,
                 'topic'     => $request->topic,
                 'question_id' => $question_id,
-                'summary' => htmlspecialchars($summary),
+                'summary' => $summary1,
                 'created_at' =>\Carbon\Carbon::now()->toDateTimeString(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
 
@@ -133,7 +128,7 @@ class AskQuestionController extends Controller
 
         // store session amount
 
-        $request->session()->put('order_summary', substr($request['question_body'], 0, 200));
+        $request->session()->put('order_summary', $summary);
 
         //redirect to post deadline view
 

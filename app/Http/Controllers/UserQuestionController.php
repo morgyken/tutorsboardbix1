@@ -163,9 +163,7 @@ class UserQuestionController extends Controller
           return Response::download($dest);
     }
 
-    
-
-    /*
+     /*
      * comments files download
      */
 
@@ -308,7 +306,7 @@ class UserQuestionController extends Controller
 
       $countComplete = $this->CountComplete();
 
-     //dd($CountRevisions);
+      $NoOfAvailable =  $this->NoOfAvailable();
 
       if(Auth::check())
        {
@@ -338,7 +336,7 @@ class UserQuestionController extends Controller
 
                     'bids' => $bids,
 
-                    //tutor 
+                  //tutor 
 
                     'tutor' => Auth::user()->name,
 
@@ -366,7 +364,13 @@ class UserQuestionController extends Controller
 
                     'revisions' => $CountRevisions,
 
+                    //number of complete questions 
+
                     'complete' => $countComplete,
+
+                    //available questions 
+
+                    'NoOfAvailable' => $NoOfAvailable,
 
 
                   ]);
@@ -378,6 +382,20 @@ class UserQuestionController extends Controller
       }
   }
 
+  public static function CountBids()
+  {
+    $tutorid = Auth::user()->id;
+
+    $bids = DB::table('quesion_bids')-> where('tutor_id', $tutorid)->get();
+
+    if($rev == null ){
+
+      $bids = 0 ;
+    }    
+
+    return count($rev);
+
+  }
 
   public static function CountRevisions(){
     
@@ -429,6 +447,20 @@ class UserQuestionController extends Controller
     return count($bids);
   
   }    
+
+  public static function NoOfAvailable(){
+
+    $available = DB::table('question_matrices')
+
+            ->where ('status', 'new')
+
+           // ->where ('question_id', $question_id)
+
+            ->get();
+
+    return count($available);
+  
+  }   
 
     public static function CountTutorBids($tutorid){
 
@@ -484,10 +516,7 @@ class UserQuestionController extends Controller
         else {
            return array();
         }
-
-     
-
-        
+      
     }
 
    // count question matrices
@@ -619,50 +648,6 @@ class UserQuestionController extends Controller
             }
       }
 
-    //Question Status
-
-    /*
-    public function  PostAnswer(Request $request, $question){
-
-        //file uploads
-
-        $file = Input::file('file');
-
-        $dest = public_path().'/storage/uploads/'.$question.'/answer/';
-
-            foreach ($file as $files){
-                $name =  $files->getClientOriginalName();
-                $files->move($dest, $name);
-            }
-
-        /*
-         * Update the question status
-
-
-            $this->UpdateQuestionStatus($request, $question);
-
-        //Insert into database
-
-       DB::table('post_answers')->insert(
-            [
-                'overdue' => '0',
-                'question_id' =>$question,
-                'user_id' => Auth::user()->email,
-                'answered' => 1,
-                'answer_body' => $request['answer_body'],
-                'created_at' =>\Carbon\Carbon::now()->toDateTimeString(),
-                'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
-            ]);
-
-        //update status
-
-        $this->Status($question, 'answered');
-
-        return redirect()->route('view-question', ['question_id'=> $question]);
-
-    }
-    */
-
     public function questionAll()
     {
         /*
@@ -676,17 +661,7 @@ class UserQuestionController extends Controller
         return view('questions.question-blog', ['question' => $questions]);
     }
 
-    public function getAskQuestion()
-    {
-        /*
-         * Select distinct form table Questions
-         */
-
-        return view('questions.ask-question');
-
-    }
-
-    public function askPriceDeadline(Request $request)
+   public function askPriceDeadline(Request $request)
     {
         $username = Auth::user()->email;
         $question_id =  $value = session('question_id');
@@ -713,47 +688,10 @@ class UserQuestionController extends Controller
         $textToDelete = substr($string, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
 
         return str_replace($textToDelete, '', $string);
-        }
+        }  
 
-    /*
-     * View Deadline post
-     */
+    public function StudentCurrent() {
 
-    public function postdeadlinePrice(){
-
-      $academic_level = DB::table('academic_levels')
-                      ->select('academic-level')
-                      -> get();
-
-              return view('quest.ask-deadline-1',['category'=> $this->getQuestionCategories()]);
-        }
-
-    /*
-     * Open View to post questions
-     */
-    public function getQuestionCategories(){
-      $category = QuestionCategories::select('category')
-
-                ->get();
-
-        return $category;
-    }
-
-
-    public function postQuestions(){
-
-        return view('quest.ask-question',['category' => $this->getQuestionCategories()]);
-    }
-
-    public function generateRandomString() {
-        $length = 12;
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
     }
 
 
