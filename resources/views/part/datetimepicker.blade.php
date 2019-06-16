@@ -33,7 +33,7 @@
 
     <div class="form-group col-md-12">
 
-        <input type="text" autocomplete="off" class="form-control myinput input-lg" placeholder="Select Deadline"  name="question_deadline" id="datetimepicker4"/>
+        <input type="text" onchange="calculate_price()" autocomplete="off" class="form-control myinput input-lg" placeholder="Select Deadline"  name="question_deadline" id="datetimepicker4"/>
     </div>
 
 

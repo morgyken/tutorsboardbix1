@@ -2,8 +2,6 @@
 
 @section ('content')
 
-
-
 <?php
 
 
@@ -134,9 +132,7 @@
 
                                                          <div class="col-md-7" style="text-align: left;font-size:92%;">
                                                             <p> 
-                                                                <?php echo strip_tags(html_entity_decode($value->order_summary)); ?>
-
-                                                            </p> 
+                                                                <?php echo strip_tags(html_entity_decode($value->order_summary)); ?>                                                            </p> 
                                                         </div> 
                                                          <div class="col-md-2" style="font-size: 75%; padding: .1em; ">
                                                            <span class="badge badge-info ">Ksh. {{$value->tutor_price * 94}}</span>

@@ -1,30 +1,20 @@
 @extends('layouts.layout-cust')
 
 @section ('content')
+
 <script type="text/javascript">
 
     function incrementValue()
     {
         var value =  document.getElementById('price').value ;
-
-        value = isNaN(value) ? 0 : value;
         if(value < 550){
             value++;
         }
+       
 
         document.getElementById('price').value =  value;
     }
-    function decrementValue()
-    {
-        var value =document.getElementById('price').value;
-        value = isNaN(value) ? 0 : value;
-        if(value > calculate_price())
-        {
-            value--;
-        }
-
-        document.getElementById('price').value =  value;
-    }
+   
     function minmax(value, min, max)
     {
         //set max price
@@ -35,74 +25,66 @@
             return 2300;
         else return value;
     }
-    window.onload= function(){
-      {
-        document.getElementById("price").value = Number(20);
-      }
-    };
+   
     //find the maximum dates
     function diff_minutes(dt2, dt1) 
          {
-
           var diff =(dt2.getTime() - dt1.getTime()) / 1000;
           diff /= 60;
-          return Math.abs(Math.round(diff/60));
-          
+          return Math.abs(Math.round(diff/60));          
          }
 
     function calculate_price()
     {
-
-                
+             
         var pages = Number(document.getElementById("page_num").value);
 
-        var base_price = Number(20);
+        var base_price = Number(15);       
 
         if($("#academic_level").val() == 'phd' )
         {
-            base_price *= 3.0;
+            base_price *= 4.0;
         }
         if($("#academic_level").val() == 'masters' )
         {
-            base_price *= 2.0;
+            base_price *= 3.5;
         }
         if($("#academic_level").val() == 'senior' )
         {
-            base_price *= 2.0;
+            base_price *= 3.0;
         }
         if($("#academic_level").val() == 'junior' )
         {
-            base_price *= 1.5;
+            base_price *= 2.5;
         }
         if($("#academic_level").val() == 'highschool' )
         {
-            base_price *= 1.7;
+            base_price *= 1.5;
         }
         if($("#academic_level").val()== 'other' )
         {
-            base_price *= 1;
+            base_price *= 1.2;
         }
 
 
         if(document.querySelector('input[name="urgency"]:checked').value == 'very_high' )
         {
-            base_price += Number(6) *pages;
+            base_price += Number(4) *pages;
         }
         if(document.querySelector('input[name="urgency"]:checked').value == 'high' )
         {
-            base_price += Number(5) *pages;
+            base_price += Number(3) *pages;
         }
         if(document.querySelector('input[name="urgency"]:checked').value == 'medium')
         {
-            base_price += Number(4) *pages;
+            base_price += Number(2) *pages;
         }
         if(document.querySelector('input[name="urgency"]:checked').value == 'low' )
         {
-            base_price += Number (3) *pages;
+            base_price += Number (1) *pages;
         }
 
-
-        //single or double
+       //single or double
 
         if(document.querySelector('input[name="spacing"]:checked').value == '2' )
         {
@@ -122,21 +104,23 @@
 
         if(diff < 3)
         {
-            base_price *=Number(1.5);
+            base_price *=Number(1.6);
         }
         if(diff < 6) 
         {
-            base_price *= Number(1.4)
+            base_price *= Number(1.5)
         }
-        if(diff < 12)
+        if(diff < 24)
         {
             base_price *= Number(1.3)
         }
+        if(diff < 36)
+        {
+            base_price *= Number(1.2)
+        }
         else{
             base_price = base_price;
-        }
-
-       
+        }      
 
         document.getElementById("price").value = '$ '+ base_price;  
 
@@ -278,7 +262,7 @@
 		                            <label for="password" class="col-md-4 card-title"><h3>{{ __('Formatting') }} </h3></label>
 
 		                            <div class="col-md-6">
-		                                <select id="" name="paper_format" class="form-control">
+		                                <select id=""  name="paper_format" class="form-control">
 		                                    <option selected="selected" value="1">APA</option>
 		                                        <option value="MLA">MLA</option>
 		                                        <option value="Turabian">Turabian</option>
@@ -297,19 +281,19 @@
 		                           <div class="row">
 		                            <div class="col-md-6">
 		                            	<div class="radio">
-		                                <label><input type="radio" id="urg" value="low" name="urgency"> Low</label>
+		                                <label><input type="radio" onchange="calculate_price()" id="urg" value="low" name="urgency"> Low</label>
 		                                </div>
 		                                <div class="radio">
-		                                  <label><input type="radio" id="urg" value="medium" name="urgency"> Medium</label>
+		                                  <label><input type="radio" id="urg" onchange="calculate_price()" value="medium" name="urgency"> Medium</label>
 		                                </div>
 		                            </div>
 		                                                                    
 		                             <div class="col-md-6">
 		                                <div class="radio">
-		                                  <label><input type="radio" id="urg" value="high" name="urgency"> High</label>
+		                                  <label><input type="radio" onchange="calculate_price()" id="urg" value="high" name="urgency"> High</label>
 		                                </div>
 		                                <div class="radio">
-		                                  <label><input type="radio" id="urg" value="very_high" name="urgency"> Very High</label>
+		                                  <label><input type="radio" onchange="calculate_price()" id="urg" value="very_high" name="urgency"> Very High</label>
 		                                </div>
 		                             </div>
 		                         </div>
@@ -320,7 +304,7 @@
                                         <label class="col-md-4">Number of Pages </label>
                                         <div class="col-md-8"> 
 
-                                            <select title="page_num" id="page_num" class="form-control" name="pagenum">                                   
+                                            <select title="page_num" onchange="calculate_price()" id="page_num" class="form-control" name="pagenum">                                   
                                                 	<option selected="selected" value="1">1 page/approx 275 words</option>
                                                     <option value="2">2 pages/approx 550 words</option>
                                                     <option value="3">3 pages/approx 825 words</option>
@@ -678,10 +662,10 @@
                                                 <div class="col-md-8">
                                                     <div class="radio">
                                                         <label>
-                                                        <input type="radio" value="1" name="spacing">  Single
+                                                        <input type="radio" onchange="calculate_price()" value="1" name="spacing">  Single
                                                         </label> 
                                                         <label>
-                                                            <input type="radio" value="2" name="spacing">  Double
+                                                            <input type="radio" onchange="calculate_price()" value="2" name="spacing">  Double
                                                         </label>                                                  
                                                                        
                                                 </div>
@@ -693,7 +677,7 @@
                                            <div class="form-group row">
                                                 <label class="col-md-4">Academic level  </label>
                                                 <div class="col-md-8">
-		                                            <select id="academic_level" name="academic_level" class="form-control" size="1">
+		                                            <select id="academic_level" onchange="calculate_price()" name="academic_level" class="form-control" size="1">
 		                                                <option selected="selected" value="phd">PHD</option>
 		                                                <option value="masters">Masters (Year > 2)</option>
 		                                                <option value="senior">Senior College (Year > 2)</option>
@@ -729,8 +713,6 @@
 						                        <div class="card-body">
 						                            <h2><strong>What is your Deadline?</strong></h2>
 						                            <p>Click on the box below to select deadline</p>
-						                       
-
 						                            <div class="row">
 						                                <div class='col-md-12'>
 
@@ -758,20 +740,11 @@
 						                              <p>Use the + and - sign to increase to the agreed price, good prices attract good tutors</p>
 
 
-						                        	<div style="font-size:24px;padding-bottom: 20px;text-align: center;"> 
-						                        		<button type="button" id="min" onclick="decrementValue()">
-						                            		<span class="glyphicon glyphicon-minus" aria-hidden="true">			                            			
-						                            		</span> 
-						                            	</button>
-						                        		<input type="text" id="price" name="question_price" id="price" min="12"
-						                        			onkeyup="this.value = minmax(this.value, 20, 2030)" max="150" value="20" style="text-align: center; font-weight: 800" readonly>
-						                            	<button type="button" id="plus" onclick="incrementValue()">		<span class="glyphicon glyphicon-plus" aria-hidden="	true">
-						                            		
-						                            		</span>
-						                            	</button>
+						                        	<div> 
+						                        		
+						                        		<input type="text" style="text-align:center" id="price" name="question_price" class="form-control"  readonly>
+						                            	
 						                        	</div>
-
-
 						                     
 						                    </div>
 						                    <div class="card" style="margin-top: 20px; margin-bottom:20px; margin-left: 0px;">

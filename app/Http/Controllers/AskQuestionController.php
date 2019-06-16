@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
 use App\QuestionStatusModel;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
@@ -25,9 +23,7 @@ use App\PostQuestionModel;
 use App\PostQuestionPrice;
 use App\SuggestDeadline;
 use App\SuggestPriceIncrease;
-
 use Illuminate\Support\Facades\Input;
-
 use Illuminate\Support\Facades\Auth;
 
 class AskQuestionController extends Controller
@@ -53,7 +49,7 @@ class AskQuestionController extends Controller
       
         $number_of_words = rand (180,230);
 
-        $number_of_words1 = rand (130,150);
+        $number_of_words1 = rand (160,240);
       
         $summary =  strip_tags(substr($request->question_body,0, $number_of_words)). '...';
 
@@ -141,15 +137,12 @@ class AskQuestionController extends Controller
         /*
          * Insert into database
          */
-
-       
-
-        $question  = $request-> session()->get('question_id');
+       $question  = $request-> session()->get('question_id');
 
         DB::table('question_details')->where('question_id', $question)
                 ->update(
                     [    
-                'tutor_price' => round(24.8 * substr($request['question_price'], 2)/100,0, PHP_ROUND_HALF_UP),
+                'tutor_price' => round(25.8 * substr($request['question_price'], 2)/100,0, PHP_ROUND_HALF_UP),
                 //'tutor_price' =>  $request['tutor_price'],
                 'urgency' => $request->urgency,
                  
@@ -223,9 +216,7 @@ class AskQuestionController extends Controller
                         'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                     ]
                 );
-         
-
-
+                
       return redirect()->route('home');
    }
    
