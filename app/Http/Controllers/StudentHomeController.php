@@ -39,7 +39,7 @@ class HomeController extends Controller
 
             ->paginate(10);
 
-        return view('cust.cust-home', 
+        return view('cust.home', 
             [
                 'question' => $question
             ]
