@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\QuestionStatusModel;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use Illuminate\Support\Facades\File;
 use DB;
 use Storage;
 use App\Http\Controllers\PaymentController;
@@ -72,6 +73,8 @@ class CustomerAskQuestionController extends Controller
         if(is_array($file)){
 
             $dest = public_path().'/storage/uploads/'.$question_id.'/question/';
+
+            File::makeDirectory($dest, $mode = 0777, true, true);
 
             foreach ($file as $files){
                 /*
