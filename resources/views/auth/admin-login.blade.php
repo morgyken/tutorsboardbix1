@@ -1,13 +1,7 @@
-
-
-
-@extends('layouts.layout-home')
+@extends('layouts.layout-admin')
 
 @section ('content')
-       
-
-
-        
+              
         <!--================Blog Area =================-->
         <section class="blog_area p_120">
             <div class="container">

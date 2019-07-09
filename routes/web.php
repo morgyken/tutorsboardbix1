@@ -129,6 +129,14 @@ Route::prefix('admin')->group(function (){
 
 	->name('admin.password.email');
 
+	Route::get('/show-register', 'Auth\AdminRegisterController@showRegister')
+
+	->name('admin.show.register');
+
+	Route::post('/post-register', 'Auth\AdminRegisterController@create')
+
+	->name('admin.create');
+
 	Route::get('/password/reset', 'Auth\AdminForgotPasswordController@showLinkRequestForm')
 
 	->name ('admin.password.request');
