@@ -30,6 +30,8 @@ Route::any('/question_det/{question_id}', [ 'as'=>'user-question_det', 'uses'=>'
 Route::any('/cust-question-det/{question_id}/', [ 'as'=>'cust-question-det', 'uses'=>'StudentQuestionController@NewQuestionDetails'] );
 
 
+Route::post('/tutor/payment/requests/', 'TutorPaymentController@TutorReqPayments')->name('request.payments');
+
 Route::get('/home/{params?}', 'HomeController@index')->name('home');
 
 //Route::get('/student-home', 'StudentHomeController@index')->name('cust.home');
@@ -123,7 +125,13 @@ Route::prefix('admin')->group(function (){
 
 	Route::post('messages/{questionid}/{messageid}',	['uses' => 'MessageController@PostReplyMessages', 'as' =>'messages-reply']);
 
-	//Route List Files 
+	//Route List Files getAlltutors
+	Route::get('/tutors/all', 'AdminController@getAlltutors')->name('admin.tutors');
+	Route::get('/admin/all', 'AdminController@getAllamin')->name('admin.admin');  
+
+	Route::post('/tutors/deactivate/{id}', 'AdminController@deactivateTutors')->name('inactivate.tutor'); 
+	
+	Route::post('/tutors/add', 'AdminController@addTutors')->name('add-tutors'); 
 	
 	Route::post('/password/email', 'Auth\AdminForgotPasswordController@sendResetLinkEmail')
 
@@ -136,6 +144,12 @@ Route::prefix('admin')->group(function (){
 	Route::post('/post-register', 'Auth\AdminRegisterController@create')
 
 	->name('admin.create');
+
+
+	Route::get('/admin/showPaymentRequests', 'TutorPaymentController@getAllPaymentReq')
+
+	->name ('tutor.payment.request');
+
 
 	Route::get('/password/reset', 'Auth\AdminForgotPasswordController@showLinkRequestForm')
 

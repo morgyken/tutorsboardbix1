@@ -63,16 +63,7 @@
     }
     ?>
 
-    <div class="clearfix">
-        <div class="col-md-10">
-            <h4>Question Detail  </h4>
-        </div>
-        <div class="col-md-2">
-            <h4> Other Details</h4>
-        </div>
-
-    </div>
-<hr>
+ 
 
 
 </script>
@@ -103,11 +94,11 @@
                                     <div class="blog_text_inner">
 
                                         <div class="card row">
+                                       
                                         <div class="card-header">
                                             Available Questions
                                         </div>
-
-                                         
+                                                                                
                                           @foreach($question as $value)
 
                                            <?php  $array_of_deadline = getDeadlineInSeconds1($value->question_deadline);

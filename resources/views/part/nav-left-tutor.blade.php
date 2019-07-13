@@ -13,7 +13,7 @@
                                 <a href=" {{ route('profile-pic-view') }}">
                                 
 
-                                <img class="author_img img-fluid" src="{{ URL::asset('storage/profile/'.Auth::user()->id.'/profile.jpg')}}" alt="">
+                                <img class="author_img img-fluid" max-width=300 src="{{ URL::asset('storage/profile/'.Auth::user()->id.'/profile.jpg')}}" alt="">
                             </a>
                                 <h4>{{ Auth::user()->name }}: Tutor</h4>
                             
@@ -27,6 +27,23 @@
                                
                                 <div class="br"></div>
                                 <h4> Ksh. {{ $total }}/ {{ $total2}} </h4>
+                                <form method='post' action="{{route('request.payments') }}">
+                                    @csrf
+                                    <input type='hidden' name= 'amount' value={{$total}} > 
+                                    <button type="submit" class="btn btn-warning">Request Payment</button>
+                                </form>
+                                <p> Payments will be processed within 48 hours </p>
+                                @if(session()->has('message-err'))
+                                <div class="alert alert-warning" role="alert">
+                                       {{ session()->get('message-err') }}
+                                    </div>                         
+                                @endif
+                                 @if(session()->has('message-success'))
+                                <div class="alert alert-success">
+                                    {{ session()->get('message-success') }}
+                                </div>
+                                @endif
+
 
                                 <div class="br"></div>
                             </aside>
