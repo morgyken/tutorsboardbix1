@@ -207,14 +207,14 @@
 
                     <div class="form-group">       
                 
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <span class="btn btn-primary btn-file">
-                                    Browse&hellip; <input type="file" name='file[]' class="form-control"  multiple>
-                                </span>
-                            </span>
-                            <input type="text" class="form-control" readonly>
-                        </div>
+                       <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                            Browse&hellip; <input type="file"   style="display:none;" id="my-file-selector" name='file[]' class="form-control"  multiple>
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" id="upload-file-info" readonly>
+                </div>
                     </div>
                                 
                               
@@ -231,32 +231,13 @@
               </div>
             </div>
           </div>
-
-                                             
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script type="text/javascript">
             
-            $(document).on('change', '.btn-file :file', function() {
-              var input = $(this),
-                  numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                  label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-              input.trigger('fileselect', [numFiles, label]);
-            });
-
-            $(document).ready( function() {
-                $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
-                    
-                    var input = $(this).parents('.input-group').find(':text'),
-                        log = numFiles > 1 ? numFiles + ' files selected' : label;
-                    
-                    if( input.length ) {
-                        input.val(log);
-                    } else {
-                        if( log ) alert(log);
-                    }
-                    
-                });
-            });
-        </script>                   
+          $('#my-file-selector').on('change',function(){
+            $('#upload-file-info').val($(this).val())
+            })
+        </script>                      
 
        
         <!--================Blog Area =================-->

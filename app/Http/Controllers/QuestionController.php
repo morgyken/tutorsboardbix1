@@ -251,6 +251,9 @@ class QuestionController extends \App\Http\Controllers\Controller
                     ->select('status')
                     ->where('question_id', $question_id)
                     ->first();
+        //question bids here
+
+        $bids = DB::table('question_bids')->where ('question_id', $question_id) -> get();
 
 
         if($status == null)
@@ -270,7 +273,7 @@ class QuestionController extends \App\Http\Controllers\Controller
                 return view ('question.question-det',
                   [
                     // class for html data
-
+                    'bids' => $bids,
 
                     'class' =>  $user,
 

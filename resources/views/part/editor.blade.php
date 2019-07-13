@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+
 
 <head>
     <meta charset="utf-8">
@@ -51,6 +50,3 @@
             branding: false
         });
     </script>
-</body>
-
-</html>

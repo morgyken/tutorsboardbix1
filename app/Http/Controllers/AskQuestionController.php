@@ -42,6 +42,10 @@ class AskQuestionController extends Controller
 
     }
 
+    public function getQuestionId(){
+
+    }
+
     
     public function postQuestion(Request $request)
     {

@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="{{ URL::asset('opium/vendors/animate-css/animate.css')}}">
         <link rel="stylesheet" href="{{ URL::asset('opium/vendors/jquery-ui/jquery-ui.css')}}">
         <!-- Latest compiled and minified CSS -->
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
 
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -24,6 +25,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.xx.x/css/uikit.min.css" />
         <!--End Uikit -->
         <!-- main css -->
+        
         <link rel="stylesheet" href="{{ URL::asset('opium/css/style.css')}}">
          <link rel="stylesheet" href="{{ URL::asset('css/theme1e.css')}}">
         <link rel="stylesheet" href="{{ URL::asset('opium/css/responsive.css')}}">
@@ -125,6 +127,7 @@
         <script src="{{ URL::asset('opium/js/mail-script.js ')}}"></script>
         <script src="{{ URL::asset('opium/js/theme.js ')}}"></script>
         <script src="{{ URL::asset('uikit/uikit.min.js')}}"></script>
+         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 

@@ -47,7 +47,7 @@ Route::post('bids/{question_id}/',
 
 	[ 'as'=>'post-bids', 'uses'=>'QuestionBidsController@PostNewBids']);
 
-Route::post('/assign/{question_id}/',
+Route::post('/assign/{question_id}/{biduser?}',
 
 	[ 'as'=>'assign-question', 'uses'=>'QuestionBidsController@AssignQuestions'])->middleware('assign');
 

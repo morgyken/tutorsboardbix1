@@ -31,9 +31,15 @@
                                     <li>
                                         <a href="{{route ('tutor.payment.request') }}" class="d-flex justify-content-between">
                                             <p>Payments </p>
-                                            <p>{{$reqcount }}</p>
+                                            <p></p>
                                         </a>
                                     </li>
+                                     <li>
+                                        <a href="#" class="d-flex justify-content-between">
+                                            <p>Question Bids </p>
+                                            <p>44</p>
+                                        </a>
+                                    </li> 
                                     <li>
                                         <a href="#" class="d-flex justify-content-between">
                                             <p>All Questions</p>

@@ -105,6 +105,11 @@
                                 </div>                              
                                
                             </div>
+                            <div class="news_d_footer">                               
+                               <div class="col-md-4">
+                                    <button class="btn btn-warning btn-rounded mb-4"  data-toggle="modal" data-target="#modal-take"> View Available bids </button>
+                            </div>
+
 
                             <div class="news_d_footer">                               
                                <h5> File Uploads  </h5>

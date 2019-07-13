@@ -194,7 +194,7 @@
                                         <div class="form-group">
                                             
 
-                                            <textarea class="form-control mb-10" rows="5" name="text" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
+                                            <textarea class="form-control mb-10" rows="5" name="text" placeholder="Message" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
                                         </div>
                                             <div class="form-group"> 
                                             <span> Choose File (Optional)</span>      

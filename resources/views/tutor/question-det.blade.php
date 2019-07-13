@@ -21,6 +21,8 @@
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 </style>
+
+
         
         <!--================Blog Area =================-->
         <section class="blog_area p_120 single-post-area">
@@ -111,8 +113,7 @@
                                 <div class="col-md-6">
                                     <button class="btn btn-warning btn-rounded mb-4"  data-toggle="modal" data-target="#modal-take"> Take Order</button>
                                 </div>
-
-                             
+                           
 
                                 <div class="col-md-6" style="text-align: right;">
                                     
@@ -121,15 +122,22 @@
                                       </button>
                                 </div>
                                    @else
+                                    @if($status == 'Complete')
+
+                                    <div class="col-md-8" style="text-align: right;">
+                                    <p> The Question has Been successfully been answered by {{ Auth::user()->name}} </p>
+                                 </div> 
+                                    
+                                    @else
                                     <div class="col-md-8">
                                     <p> The Question has Been Assigned to tutor {{ Auth::user()->name}} </p>
                                 </div> 
 
-
                                  <div class="col-md-4" style="text-align: right;">
                                     <button class="btn btn-warning btn-rounded mb-4"  data-toggle="modal" data-target="#modal-optout">Opt out</button>
                                 </div> 
-                                  @endif  
+                                @endif
+                            @endif  
                             
                                
                             </div>  
@@ -213,7 +221,7 @@
                                         </div>
                                         
                                         <div class="form-group">
-                                            <textarea class="form-control mb-10" rows="5" name="text" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
+                                            <textarea class="form-control mb-10" rows="5" name="text" placeholder="Message" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
                                         </div>
                                             <div class="form-group"> 
                                             <span> Choose File (Optional)</span>      

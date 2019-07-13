@@ -155,9 +155,16 @@ public function AssignQuestion (Request $request, $question, $tutor=null)
 
     }
 
-    public function AssignQuestions ($question)
+    public function AssignQuestions ($question, $biduser=NULL)
     {
-
+        if($biduser== NULL )
+        {
+            $tutor = Auth::user()->id;
+        }
+        else
+        {
+            $tutor = $biduser;
+        }
 
         $update = new UpdateQuestionController();
 
@@ -166,14 +173,14 @@ public function AssignQuestion (Request $request, $question, $tutor=null)
         $message = "The Question has been Assigned ";
 
         $assigned_questions = DB::table('question_matrices')
-                                ->where('user_id', Auth::user()->id)
+                                ->where('user_id', $tutor )
                                 ->where ('status', 'taken')
                                 ->get();
 
         //Get account Tier 
 
         $account_rating = DB::table('users')->select('account_level')
-                        ->where ('id', Auth::user()->id)
+                        ->where ('id', $tutor)
                         ->first();
 
         $count = count($assigned_questions);
@@ -208,11 +215,13 @@ public function AssignQuestion (Request $request, $question, $tutor=null)
                     [                                             
                         'status' =>$status,
 
-                        'tutor' => Auth::user()->id, 
+                        'tutor' => $tutor, 
                                              
                         'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                     ]
                 );
+
+               
 
           DB::table('question_history_tables')
                 ->insert(
@@ -222,7 +231,7 @@ public function AssignQuestion (Request $request, $question, $tutor=null)
 
                         'question_id' => $question,
                  
-                        'user_id' => Auth::user()->id,
+                        'user_id' => $tutor,
 
                         'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                     ]
@@ -236,14 +245,22 @@ public function AssignQuestion (Request $request, $question, $tutor=null)
 
                         'question_id' => $question,
                  
-                        'tutor_id' => Auth::user()->id,
+                        'tutor_id' => $tutor,
 
                         'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                     ]
                 );
+        }
+        if($biduser == null){
+            
+            return redirect('question_det/'.$question);
         } 
 
-        return redirect('question_det/'.$question);
+        else{
+             return redirect('admin/question_det/'.$question);
+        }
+
+        
 
     }
 
