@@ -277,6 +277,8 @@ class StudentQuestionController extends Controller
         $status = $status->status;
         }
 
+        $bids = DB::table('question_bids')->where ('question_id', $question_id) -> get();
+
       //  dd($status);
 
       if(Auth::check())
@@ -284,7 +286,7 @@ class StudentQuestionController extends Controller
                 return view ('cust.question-det',
                   [
                     // class for html data
-
+                    'bids' => $bids,
 
                     'class' =>  $user,
 

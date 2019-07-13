@@ -78,7 +78,13 @@
                                 </div>
                             </div>
                      
-                            {!! htmlspecialchars_decode($question-> question_body) !!}             
+                            {!! htmlspecialchars_decode($question-> question_body) !!} 
+                            <div class="news_d_footer">   
+                                                       
+                             <a href="#" class="btn btn-secondary btn-lg btn-rounded mb-4" data-toggle="modal"
+                             data-target="#frameModalBottom"><h5 style="color:#FFFFFF">Bids avalibale 14 </h5> </a>
+
+                            </div>            
                              
                             <div class="news_d_foot``````er">                               
                                <h5> File Uploads  </h5>
@@ -234,6 +240,8 @@
             </div>
         </div>
         </section>
+
+         @include('part.bids-part')
 
         
         @endsection
