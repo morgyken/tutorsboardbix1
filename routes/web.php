@@ -150,6 +150,9 @@ Route::prefix('admin')->group(function (){
 
 	->name ('tutor.payment.request');
 
+	Route::post('/admin/PostPaymentRequests', 'TutorPaymentController@ApprovePayments')
+
+	->name ('approve.payments');
 
 	Route::get('/password/reset', 'Auth\AdminForgotPasswordController@showLinkRequestForm')
 

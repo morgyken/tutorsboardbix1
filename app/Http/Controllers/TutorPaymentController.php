@@ -46,7 +46,7 @@ class TutorPaymentController extends Controller
         }
 
         public static function TutorTatalPayment ()
-    {
+        {
             // Check if it is Thurs
            $today = new Carbon(); 
 
@@ -78,8 +78,7 @@ class TutorPaymentController extends Controller
         }
         public function ApprovePayments(Request $request){
             //uopdate the matrices table
-
-            DB::table('question_matrices')->where('status', 'processed')
+        DB::table('question_matrices')->where('status', 'processed')
             ->update(
                 [   
                     'status' => 'paid',
@@ -99,7 +98,7 @@ class TutorPaymentController extends Controller
 
         public function getAllPaymentReq(){
 
-            $requests = PaymentRequest::all();
+            $requests = DB::table('payment_requests')-> get();
 
             $count = count($requests);
 
@@ -117,27 +116,30 @@ class TutorPaymentController extends Controller
                         'user_id'       => Auth::user()->email,
                         'amount'        => $request->amount,
                         'request_id'    => $request_id,
-                        'processed'     => 'processed',
+                        'status'     => 'processed',
                         'created_at'    =>\Carbon\Carbon::now()->toDateTimeString(),
-                        'updated_at'    => \Carbon\Carbon::now()->toDateTimeString(),
+                        'updated_at'    => \Carbon\Carbon::now()->toDateTimeString()
                 ]);
 
                 //update status to processed all questions answered and not paid to be processed
 
-            DB::table('question_matrices')->where('updated_at', '=>', Carbon::now()->subDays(15)->toDateTimeString())
+            DB::table('question_matrices')
+
+            ->where('updated_at', '<=', Carbon::now()->subDays(15)->toDateTimeString())
+
+            ->where('user_id', Auth::user()->id)
+
             ->update(
                 [   
-                    'status' => 'processed',
-                    'updated_at'    => \Carbon\Carbon::now()->toDateTimeString(),
+                    'status' => 'processed',                    
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                 ]);
 
             } 
             else 
             {
                 return redirect()->back()->with('message-err', 'Your request was not successful, try again later!');
-            }         
-                
-
+            }                    
         return redirect()->back() ->with('message-success', 'Your request was successful!');
         }
     }

@@ -26,7 +26,7 @@
                                data-toggle="modal" data-target="#addAdmin"><h3>Add Admin </h3></a>
                             </article>
                           
-                            <article class="blog_style1";">
+                            <article class="blog_style1">
                                 
                                 <div class="blog_text">
                                     <div class="blog_text_inner">
@@ -40,37 +40,41 @@
                                             <ul class="list-group list-group-flush clearfix">
                                                 <li class="list-group-item" >
                                                     <div class="row"> 
-                                                        <div class="col-md-3">
-                                                            <a href=""> {{ $value->request_id}} </a>
+                                                        <div class="col-md-2">
+                                                            <a href=""> {{ substr($value->request_id, 6)}} </a>
                                                         </div> 
 
-                                                         <div class="col-md-4" style="text-align: left;font-size:92%;">
+                                                         <div class="col-md-3" style="text-align: left;font-size:92%;">
                                                             <p> {{ $value ->user_id}}</p> 
                                                         </div> 
                                                          <div class="col-md-1">                                                         
-                                                           <p> ${{ $value ->amount}}</p> 
+                                                           <p> ${{ $value ->amount}}</p>                                                           
                                                         </div>
-                                                        <div class="col-md-6">                                                         
-                                                           <p> {{ $value ->status}}</p> <p>Status here 
+                                                        
+                                                        <div class="col-md-2">                                                         
+                                                           <p> {{ $value ->status}} </p>
                                                         </div> 
-                                                         <div class="col-md-6"> 
-                                                         <form method='post' action="{{ route('inactivate.tutor',
-                                                         ['id' => $value->id])}}">
+                                                        <div class="col-md-3">                                                                                                               
+                                                           <p>  {{ date('d-m-y - h', strtotime( $value ->created_at)) }} </p>
+                                                        </div>
+                                                         <div class="col-md-1"> 
+                                                         <form method='post' action="{{ route('approve.payments')}}">
                                                           @csrf
-                                                              <input type='hidden' name= 'isactive' value='0'> 
-                                                              <button type="submit" class="btn btn-warning">Approve Payment</button>
+                                                              <input type='hidden' name= 'request_id' value={{$value->request_id}}> 
+                                                              @if($value ->status == 'paid')
+                                                               <button type="submit" class="btn btn-success">Paid</button>
+                                                            @else
+                                                              <button type="submit" class="btn btn-warning">Pay</button>
+                                                            @endif
                                                          </form>                                                        
-                                                           <p> </p> 
+                                                    
                                                         </div>                                                        
-                                                    </div>                                                                                              
-                                          
-
-                                                </li>
-                                            </ul>
-                                
+                                                    </div>
+                                                    
+                                                  </li>
+                                            </ul>                          
                                                                 
-                                               @endforeach
-                                     
+                                               @endforeach                                    
 
                                         </div>                             
                                     </h5>
