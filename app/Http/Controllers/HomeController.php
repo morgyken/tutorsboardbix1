@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
+use App\Mail\SendMailable;
 use Auth;
 use DB;
-
+use Mail;
 class HomeController extends UserQuestionController
 {
     /**
@@ -421,4 +420,30 @@ public function GetWidthdrawn()
 
     }
 
+  public function TutorApplications (Request $request)
+  {
+    DB::table('tutor_applications_models')->insert(
+      [
+          'qualification' => $request->qualification,
+
+          'course' =>  $request->qualification,
+
+          'paypalemail' => $request->paypalemail,
+
+          'email' => Auth::user()->email,
+
+          'phone' =>  $request->phone,
+
+          'created_at' =>\Carbon\Carbon::now()->toDateTimeString(),
+          
+          'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+      ]);
+
+    $name = Auth::user()->name;
+
+    Mail::to('morgyken@gmail.com')->send(new SendMailable($name));
+
+    return redirect()->back();
+  }
+  
 }

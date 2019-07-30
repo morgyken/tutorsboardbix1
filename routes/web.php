@@ -38,6 +38,8 @@ Route::get('/home/{params?}', 'HomeController@index')->name('home');
 
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
+Route::post('/users/applications/', 'HomeController@TutorApplications')->name('tutor.applications');
+
 Route::post('messages/{questionid}',	['uses' => 'UserMessageController@PostMessages', 'as' =>'user-messages']);
 
 Route::post('student-res/{questionid}',	['uses' => 'UserMessageController@StudentResponse', 'as' =>'student-res']);

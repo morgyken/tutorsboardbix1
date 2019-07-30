@@ -146,8 +146,7 @@ class AskQuestionController extends Controller
         DB::table('question_details')->where('question_id', $question)
                 ->update(
                     [    
-                'tutor_price' => round(25.8 * substr($request['question_price'], 2)/100,0, PHP_ROUND_HALF_UP),
-                //'tutor_price' =>  $request['tutor_price'],
+                'tutor_price' => round(55 * substr($request['question_price'], 2)/100,0, PHP_ROUND_HALF_UP),
                 'urgency' => $request->urgency,
                  
                 'question_id'    => $request->session()->get('question_id'),
